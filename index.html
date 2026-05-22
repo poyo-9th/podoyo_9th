@@ -2327,6 +2327,7 @@ transform:translateY(0) scale(1);
 <audio id="stepBgm" loop src="step.bgm.mp3"></audio>
 <audio id="memoryBgm" src="poyo/poyo - I stan U.mp3"></audio>
 <audio id="filmSfx" src="clip/film.sfx.mp3"></audio>
+<audio id="gameBgm" loop src="poyo_cover.mp3"></audio>
 
 <audio id="finalTick" src="tick.mp3"></audio>
   
@@ -2635,6 +2636,7 @@ const skipBtn=document.getElementById("skipBtn");
 const mainBgm=document.getElementById("mainBgm");
 const stepBgm=document.getElementById("stepBgm");
 const memoryBgm=document.getElementById("memoryBgm");
+const gameBgm=document.getElementById("gameBgm");
 const filmSfx=document.getElementById("filmSfx");
 const volumeToggle=document.getElementById("volumeToggle");
 const pages=document.querySelectorAll(".page");
@@ -2699,6 +2701,7 @@ if(volumeToggle){
 mainBgm.muted = audioMuted;
 stepBgm.muted = audioMuted;
 memoryBgm.muted = audioMuted;
+gameBgm.muted = audioMuted;
 
 if(filmSfx){
   filmSfx.muted = audioMuted;
@@ -2824,9 +2827,19 @@ function showOverlay(id){
     .classList.add("show");
 
   if(id === "game"){
-    setupGameStartBackground();
-    resetGameToStart();
+
+  if(mainBgm){
+    mainBgm.pause();
+    mainBgm.currentTime = 0;
   }
+
+  gameBgm.muted = audioMuted;
+  gameBgm.volume = 0.45;
+  gameBgm.play().catch(()=>{});
+
+  setupGameStartBackground();
+  resetGameToStart();
+}
 
   if(id === "memory"){
 
@@ -3330,10 +3343,21 @@ document.querySelectorAll(".top-btn").forEach(btn=>{
     const overlay=btn.dataset.overlay;
     const page=btn.dataset.page;
 
-    if(page==="home"){
-      hideOverlays();
-      move(0);
-    }
+   if(page==="home"){
+
+  hideOverlays();
+
+  if(gameBgm){
+    gameBgm.pause();
+    gameBgm.currentTime = 0;
+  }
+
+  mainBgm.muted = audioMuted;
+  mainBgm.volume = 0.45;
+  mainBgm.play().catch(()=>{});
+
+  move(0);
+}
 
     if(overlay){
       showOverlay(overlay);
