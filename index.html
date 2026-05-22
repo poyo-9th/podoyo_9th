@@ -858,8 +858,9 @@ padding:40px;
 #guestbookStage{
   position:absolute;
   inset:0;
+  z-index:30;
 }
-
+  
 /* 👇 여기 추가 */
 .guestbook-input-box{
   position:absolute;
@@ -5249,36 +5250,18 @@ guestMessageBtn.addEventListener("click", async ()=>{
   guestMessageInput.value = "";
 });
 
-db.collection("guestbook")
-.orderBy("createdAt","desc")
-.onSnapshot(snapshot=>{
+const safePositions = [
+  { left: "7%", top: "16%" },
+  { left: "24%", top: "14%" },
+  { left: "68%", top: "15%" },
+  { left: "83%", top: "20%" },
+  { left: "7%", top: "58%" },
+  { left: "25%", top: "64%" },
+  { left: "68%", top: "63%" },
+  { left: "83%", top: "56%" }
+];
 
-  guestbookStage.innerHTML = "";
-  firebaseMailboxList.innerHTML = "";
-
-  snapshot.forEach(doc=>{
-
-    const data = doc.data();
-
-    if(data.hidden) return;
-
-    const postit = document.createElement("div");
-    postit.className = "guestbook-postit show";
-    postit.textContent = data.message;
-
-    postit.dataset.id = doc.id;
-
-  postit.addEventListener("click", async ()=>{
-  const ok = confirm("이 포스트잇을 숨길까요?");
-
-  if(!ok) return;
-
-  await db.collection("guestbook").doc(doc.id).update({
-    hidden:true
-  });
-});
-
-  const postitColors = [
+const postitColors = [
   "#fff3a6",
   "#ffb3ba",
   "#ffd6a5",
@@ -5289,34 +5272,44 @@ db.collection("guestbook")
   "#ffc6ff"
 ];
 
-const color =
-  postitColors[
-    Math.floor(Math.random() * postitColors.length)
-  ];
+db.collection("guestbook")
+.orderBy("createdAt","desc")
+.onSnapshot(snapshot=>{
 
-postit.style.background = color;
+  guestbookStage.innerHTML = "";
+  firebaseMailboxList.innerHTML = "";
 
-const safePositions = [
-  { left: "7%", top: "16%" },
-  { left: "24%", top: "14%" },
-  { left: "68%", top: "15%" },
-  { left: "83%", top: "20%" },
+  const visibleDocs = snapshot.docs.filter(doc=>{
+    return doc.data().hidden !== true;
+  });
 
-  { left: "7%", top: "58%" },
-  { left: "25%", top: "64%" },
-  { left: "68%", top: "63%" },
-  { left: "83%", top: "56%" }
-];
-    
-const pos = safePositions[
-  Array.from(snapshot.docs).indexOf(doc) % safePositions.length
-];
+  visibleDocs.forEach((doc,index)=>{
 
-const r = Math.random()*16-8;
+    const data = doc.data();
 
-postit.style.left = pos.left;
-postit.style.top = pos.top;
-postit.style.setProperty("--rotate", r + "deg");
+    const postit = document.createElement("div");
+    postit.className = "guestbook-postit show";
+    postit.textContent = data.message;
+    postit.dataset.id = doc.id;
+
+    const pos = safePositions[index % safePositions.length];
+    const color = postitColors[index % postitColors.length];
+    const r = Math.random() * 16 - 8;
+
+    postit.style.left = pos.left;
+    postit.style.top = pos.top;
+    postit.style.background = color;
+    postit.style.setProperty("--rotate", r + "deg");
+
+    postit.addEventListener("click", async ()=>{
+      const ok = confirm("이 포스트잇을 숨길까요?");
+      if(!ok) return;
+
+      await db.collection("guestbook").doc(doc.id).update({
+        hidden:true
+      });
+    });
+
     guestbookStage.appendChild(postit);
 
     const item = document.createElement("div");
@@ -5333,6 +5326,7 @@ postit.style.setProperty("--rotate", r + "deg");
       </p>
     `;
   }
+
 });
 
 db.collection("promises")
