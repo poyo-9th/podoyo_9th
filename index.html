@@ -2105,6 +2105,53 @@ transform:translateY(0) scale(1);
   z-index:3;
 }
 
+@font-face {
+  font-family:'KyoboLetter';
+  src:url('KyoboHandwriting2025lyb.ttf') format('truetype');
+}
+
+.love-letter-img{
+  cursor:pointer;
+}
+
+#letterPopup{
+  position:fixed;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  background:rgba(0,0,0,.55);
+  backdrop-filter:blur(6px);
+  z-index:99999999;
+}
+
+#letterPopup.show{
+  display:flex;
+}
+
+.letter-paper{
+  position:relative;
+  width:min(760px,88vw);
+  aspect-ratio:3/4;
+  background:url("letter.png") center/contain no-repeat;
+  padding:92px 82px 88px;
+  box-sizing:border-box;
+}
+
+.letter-content{
+  height:100%;
+  overflow-y:auto;
+  padding-right:10px;
+
+  font-family:'KyoboLetter', sans-serif;
+  font-size:1.32rem;
+  line-height:1.62;
+  color:#4a3328;
+
+  white-space:pre-line;
+  word-break:keep-all;
+}
+
 /* 폴라로이드 영역 */
 .polaroid-area{
   position:absolute;
@@ -2425,6 +2472,24 @@ STEP 3
     <video id="popupVideo" playsinline></video>
     <button id="popupPlayBtn" type="button">▶</button>
     <button id="popupPauseBtn" type="button">⏸</button>
+  </div>
+</div>
+
+<div id="letterPopup">
+  <div class="letter-paper">
+    <div class="letter-content">포요님 안녕하세요.
+9주년 진심으로 축하드려요!
+
+처음에는 유튜브 영상으로만 포요님을 봤었어요. 그러다 문득 생방송도 한번 보면 재밌겠다 싶어서 숲 방송을 한두 번 보게 되었는데, 그때는 다시 일상에 치여 잠깐 잊고 지냈던 것 같아요.
+
+그러다 어느 날 포요님 플레이리스트 영상 업로드 알림을 보게 됐어요. 그 알림을 보고 다시 포요님이 생각나서 찾아보게 되었고, 그때부터 자연스럽게 생방송도 챙겨보게 된 것 같아요.
+
+저는 데뷔 때부터 오래 함께한 시청자는 아니에요. 그래도 어느 순간부터 하루의 끝에는 자연스럽게 포요님 방송을 켜고 있더라고요. 힘든 날이나 기분이 좋지 않은 날에도 방송을 보고 있으면 마음이 조금씩 괜찮아졌고, 웃으면서 하루를 마무리할 수 있었어요.
+
+그래서 꼭 감사하다는 말을 전하고 싶었어요. 포요님 방송 덕분에 힘든 순간도 버틸 수 있었고, 다시 힘내야겠다는 생각도 많이 했던 것 같아요.
+
+포요님, 방송 9주년 정말 축하드립니다.
+앞으로도 오래오래 방송 챙겨보는 포동이 중 한 명으로 남겠습니다!</div>
   </div>
 </div>
 
@@ -5472,6 +5537,24 @@ if(mailboxOverlay){
 
   });
 
+}
+
+const loveLetterImg = document.querySelector(".love-letter-img");
+const letterPopup = document.getElementById("letterPopup");
+const letterPaper = document.querySelector(".letter-paper");
+
+if(loveLetterImg && letterPopup && letterPaper){
+  loveLetterImg.addEventListener("click",()=>{
+    letterPopup.classList.add("show");
+  });
+
+  letterPopup.addEventListener("click",()=>{
+    letterPopup.classList.remove("show");
+  });
+
+  letterPaper.addEventListener("click",(e)=>{
+    e.stopPropagation();
+  });
 }
 
 </script> 
