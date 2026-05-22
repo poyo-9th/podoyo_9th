@@ -838,14 +838,6 @@ padding:40px;
 .guestbook-postit{
   font-family:'SchoolSafeStoneWall', sans-serif;
 }
-  
-.library-page,
-.library-page input,
-.library-page button,
-#promiseChalkText,
-.guestbook-postit{
-  font-family:'SchoolSafeStoneWall', sans-serif;
-}
 
 /* 4페이지 배경 */
 .library-page{
@@ -915,6 +907,9 @@ padding:40px;
   width:330px;
   min-height:240px;
   max-height:285px;
+
+  background:#fff3a6;
+  border:1px solid rgba(120,90,40,.18);
 
   padding:30px 24px 24px;
 
@@ -5237,14 +5232,32 @@ db.collection("guestbook")
   });
 });
 
-    const x = Math.random()*70+8;
-    const y = Math.random()*55+8;
-    const r = Math.random()*16-8;
+  const postitColors = [
+  "#fff3a6",
+  "#ffb3ba",
+  "#ffd6a5",
+  "#fdffb6",
+  "#caffbf",
+  "#a0e7e5",
+  "#bdb2ff",
+  "#ffc6ff"
+];
 
-    postit.style.left = x + "%";
-    postit.style.top = y + "%";
-    postit.style.setProperty("--rotate", r + "deg");
+const color =
+  postitColors[
+    Math.floor(Math.random() * postitColors.length)
+  ];
 
+postit.style.background = color;
+const pos = safePositions[
+  Array.from(snapshot.docs).indexOf(doc) % safePositions.length
+];
+
+const r = Math.random()*16-8;
+
+postit.style.left = pos.left;
+postit.style.top = pos.top;
+postit.style.setProperty("--rotate", r + "deg");
     guestbookStage.appendChild(postit);
 
     const item = document.createElement("div");
