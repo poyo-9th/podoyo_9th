@@ -648,7 +648,7 @@ line-height:1.6;
 margin-bottom:74px;
 text-align:center;
   
-transition:opacity .35s ease;
+transition:opacity .7s ease;
 }
 
 .step3-line-wrap{
@@ -4399,16 +4399,18 @@ document.querySelector(".step3-title");
 
 if(promiseTitle){
 
-  promiseTitle.style.opacity = "0";
+ promiseTitle.style.opacity = "0";
+
+setTimeout(()=>{
+
+  promiseTitle.textContent =
+  "10주년에 이루고 싶은 약속은 무엇인가요?";
 
   setTimeout(()=>{
-
-    promiseTitle.textContent =
-    "10주년에 이루고 싶은 약속은 무엇인가요?";
-
     promiseTitle.style.opacity = "1";
+  },250);
 
-  },350);
+},700);
 
 }
 
