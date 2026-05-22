@@ -7,6 +7,12 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700;800&display=swap" rel="stylesheet">
 
+<link rel="preload" as="video" href="video2.mp4">
+<link rel="preload" as="image" href="poyo/podopoyo-LOGIN.jpg">
+<link rel="preload" as="image" href="poyo/podopoyo-Last.png">
+<link rel="preload" as="image" href="poyo/poyo_page3_bg.png">
+<link rel="preload" as="image" href="poyo/poyo_background.png">
+
 <style>
 @font-face {
   font-family: 'SuperMario256';
@@ -2202,8 +2208,35 @@ transform:translateY(0) scale(1);
   cursor:pointer;
 }
 
+#popupPauseBtn.show{
+  display:block;
+}
+
 #popupPlayBtn.hide{
   display:none;
+}
+
+#popupPauseBtn{
+  position:absolute;
+  right:24px;
+  bottom:24px;
+
+  width:62px;
+  height:62px;
+
+  border:none;
+  border-radius:50%;
+
+  background:rgba(255,255,255,.85);
+
+  font-size:2rem;
+  cursor:pointer;
+
+  display:none;
+}
+
+#popupPauseBtn.show{
+  display:block;
 }
   
 .polaroid-caption{
@@ -2223,35 +2256,6 @@ transform:translateY(0) scale(1);
 .p3{ left:495px; top:25px; --r:0deg;   transform:rotate(0deg); }
 .p4{ left:725px; top:40px; --r:8deg;   transform:rotate(8deg); }
 .p5{ left:945px; top:75px; --r:15deg;  transform:rotate(15deg); }
-  
-/* 방명록 테스트용 모바일 보정 */
-.guestbook-test-mode #intro{
-  display:none !important;
-}
-
-.guestbook-test-mode #main{
-  display:block !important;
-}
-
-.guestbook-test-mode #uiLayer{
-  display:none !important;
-}
-
-.guestbook-test-mode #pages{
-  transform:none !important;
-}
-
-.guestbook-test-mode .page{
-  display:none !important;
-}
-
-.guestbook-test-mode .page-4{
-  display:flex !important;
-  opacity:1 !important;
-  transform:none !important;
-  position:fixed !important;
-  inset:0 !important;
-}
 
 @media (max-width:768px){
   .guestbook-input-box{
@@ -2307,7 +2311,7 @@ transform:translateY(0) scale(1);
 </div>
 
 <div id="intro">
-<video id="introVideo" autoplay muted playsinline>
+<video id="introVideo" autoplay muted playsinline preload="auto" poster="poyo/podopoyo-LOGIN.jpg">
 <source src="video2.mp4">
 </video>
 
@@ -2419,6 +2423,7 @@ STEP 3
   <div class="video-popup-box">
     <video id="popupVideo" playsinline></video>
     <button id="popupPlayBtn" type="button">▶</button>
+    <button id="popupPauseBtn" type="button">⏸</button>
   </div>
 </div>
 
@@ -2628,26 +2633,6 @@ STEP 3
   
 <script>
 
-const TEST_GUESTBOOK_ONLY = true;
-
-if(TEST_GUESTBOOK_ONLY){
-
-  document.body.classList.add("guestbook-test-mode");
-
-  window.addEventListener("load",()=>{
-
-    document.getElementById("intro").style.display="none";
-
-    document.getElementById("main").style.display="block";
-
-    document.getElementById("uiLayer").style.display="none";
-
-    move(3);
-
-  });
-
-}
-  
 const introVideo=document.getElementById("introVideo");
 const title=document.getElementById("title");
 const btn=document.getElementById("enterBtn");
@@ -3899,7 +3884,8 @@ rankBtn.addEventListener("click",()=>{
 const videoPopup = document.getElementById("videoPopup");
 const popupVideo = document.getElementById("popupVideo");
 const popupPlayBtn = document.getElementById("popupPlayBtn");
-
+const popupPauseBtn = document.getElementById("popupPauseBtn");
+  
 let beforePopupMainVolume = 0.45;
 
 document.querySelectorAll(".polaroid").forEach(card=>{
@@ -3927,7 +3913,18 @@ popupPlayBtn.addEventListener("click",(e)=>{
   e.stopPropagation();
 
   popupVideo.play().catch(()=>{});
+
   popupPlayBtn.classList.add("hide");
+  popupPauseBtn.classList.add("show");
+});
+
+popupPauseBtn.addEventListener("click",(e)=>{
+  e.stopPropagation();
+
+  popupVideo.pause();
+
+  popupPlayBtn.classList.remove("hide");
+  popupPauseBtn.classList.remove("show");
 });
 
 videoPopup.addEventListener("click",(e)=>{
