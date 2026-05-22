@@ -647,6 +647,8 @@ font-weight:700;
 line-height:1.6;
 margin-bottom:74px;
 text-align:center;
+  
+transition:opacity .35s ease;
 }
 
 .step3-line-wrap{
@@ -4392,12 +4394,23 @@ if(promiseCodeInput && promiseWriteBox){
 
   if(promiseCodeInput.value.trim() === "POYO_9th"){
 
-  const promiseTitle = document.querySelector(".step3-title");
+ const promiseTitle =
+document.querySelector(".step3-title");
 
-  if(promiseTitle){
+if(promiseTitle){
+
+  promiseTitle.style.opacity = "0";
+
+  setTimeout(()=>{
+
     promiseTitle.textContent =
     "10주년에 이루고 싶은 약속은 무엇인가요?";
-  }
+
+    promiseTitle.style.opacity = "1";
+
+  },350);
+
+}
 
   promiseCodeInput.style.display = "none";
 
