@@ -5284,7 +5284,6 @@ const postitColors = [
   "#bdb2ff",
   "#ffc6ff"
 ];
-
 db.collection("guestbook")
 .orderBy("createdAt","desc")
 .onSnapshot(snapshot=>{
@@ -5292,17 +5291,42 @@ db.collection("guestbook")
   guestbookStage.innerHTML = "";
   firebaseMailboxList.innerHTML = "";
 
- const visibleDocs = snapshot.docs
-  .filter(doc=>{
-    return doc.data().hidden !== true;
-  })
-  .slice(0,10);
+  const visibleDocs = snapshot.docs
+    .filter(doc=>{
+      return doc.data().hidden !== true;
+    })
+    .slice(0,10);
+
+  visibleDocs.forEach((doc,index)=>{
+
+    const data = doc.data();
+
+    const postit = document.createElement("div");
+    postit.className = "guestbook-postit show";
+    postit.textContent = data.message;
+
+    const pos = safePositions[index % safePositions.length];
+    const color = postitColors[index % postitColors.length];
+
+    postit.style.left = pos.left;
+    postit.style.top = pos.top;
+    postit.style.background = color;
+    postit.style.setProperty("--rotate", "0deg");
+
+    guestbookStage.appendChild(postit);
+
+  });
+
+  snapshot.docs.forEach((doc)=>{
+
+    const data = doc.data();
 
     const item = document.createElement("div");
     item.className = "mailbox-item";
     item.textContent = data.message;
 
     firebaseMailboxList.appendChild(item);
+
   });
 
   if(firebaseMailboxList.innerHTML.trim() === ""){
@@ -5315,34 +5339,6 @@ db.collection("guestbook")
 
 });
 
-db.collection("promises")
-.orderBy("createdAt","desc")
-.limit(1)
-.onSnapshot(snapshot=>{
-
-  if(snapshot.empty) return;
-
-  const latestPromise = snapshot.docs[0].data();
-  const chalkText = document.getElementById("promiseChalkText");
-
-  if(chalkText && latestPromise.message){
-    chalkText.style.display = "flex";
-    chalkText.textContent = latestPromise.message;
-  }
-});
-
-document.getElementById("guestMessageInput").addEventListener("keydown", function(e){
-
-  if(e.key === "Enter"){
-
-    e.preventDefault();
-
-    document.getElementById("guestMessageBtn").click();
-
-  }
-
-});
-  
 </script> 
 </body>
 </html>
