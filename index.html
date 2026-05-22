@@ -5295,6 +5295,19 @@ const color =
   ];
 
 postit.style.background = color;
+
+const safePositions = [
+  { left: "7%", top: "16%" },
+  { left: "24%", top: "14%" },
+  { left: "68%", top: "15%" },
+  { left: "83%", top: "20%" },
+
+  { left: "7%", top: "58%" },
+  { left: "25%", top: "64%" },
+  { left: "68%", top: "63%" },
+  { left: "83%", top: "56%" }
+];
+    
 const pos = safePositions[
   Array.from(snapshot.docs).indexOf(doc) % safePositions.length
 ];
