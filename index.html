@@ -5353,6 +5353,47 @@ db.collection("guestbook")
 
 });
 
+const mailboxOpenBtn =
+document.getElementById("mailboxOpenBtn");
+
+const mailboxCloseBtn =
+document.getElementById("mailboxCloseBtn");
+
+const mailboxOverlay =
+document.getElementById("mailboxOverlay");
+
+if(mailboxOpenBtn && mailboxOverlay){
+
+  mailboxOpenBtn.addEventListener("click",()=>{
+
+    mailboxOverlay.style.display = "flex";
+
+  });
+
+}
+
+if(mailboxCloseBtn && mailboxOverlay){
+
+  mailboxCloseBtn.addEventListener("click",()=>{
+
+    mailboxOverlay.style.display = "none";
+
+  });
+
+}
+
+if(mailboxOverlay){
+
+  mailboxOverlay.addEventListener("click",(e)=>{
+
+    if(e.target === mailboxOverlay){
+      mailboxOverlay.style.display = "none";
+    }
+
+  });
+
+}
+
 </script> 
 </body>
 </html>
