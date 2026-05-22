@@ -2795,6 +2795,24 @@ window.addEventListener("wheel",(e)=>{
 
 },{passive:false});
 
+function fadeVolume(audio, targetVolume, duration){
+  if(!audio) return;
+
+  const startVolume = audio.volume;
+  const startTime = performance.now();
+
+  function animate(now){
+    const progress = Math.min((now - startTime) / duration, 1);
+    audio.volume = startVolume + (targetVolume - startVolume) * progress;
+
+    if(progress < 1){
+      requestAnimationFrame(animate);
+    }
+  }
+
+  requestAnimationFrame(animate);
+}
+  
 function showOverlay(id){
 
   document.body.classList.add("hide-dots");
@@ -3910,6 +3928,8 @@ popupPlayBtn.addEventListener("click",(e)=>{
   e.stopPropagation();
 
   popupVideo.play().catch(()=>{});
+  
+  fadeVolume(mainBgm, 0.12, 700);
 
   popupPlayBtn.classList.add("hide");
   popupPauseBtn.classList.add("show");
@@ -3933,10 +3953,12 @@ videoPopup.addEventListener("click",(e)=>{
   popupVideo.load();
 
   videoPopup.classList.remove("show");
+  
+  fadeVolume(mainBgm, 0.45, 900);
+  
   popupPlayBtn.classList.remove("hide");
 
   if(mainBgm){
-    mainBgm.volume = beforePopupMainVolume;
     mainBgm.play().catch(()=>{});
   }
 });
