@@ -4727,7 +4727,7 @@ const hardBlockRules = {
   ],
 
   politics:[
-    "대통령","정당","국힘","민주당","좌파","우파","선거","정치","윤""이재명
+    "대통령","정당","국힘","민주당","좌파","우파","선거","정치","윤석열","이재명"
   ],
 
   links:[
@@ -5309,32 +5309,9 @@ document.getElementById("mailboxList");
 
 let livePostits = [];
 
-const safePositions = [
-  { left:"5%", top:"13%" },
-  { left:"23%", top:"11%" },
-  { left:"70%", top:"12%" },
-  { left:"84%", top:"17%" },
-
-  { left:"5%", top:"45%" },
-  { left:"23%", top:"51%" },
-  { left:"70%", top:"50%" },
-  { left:"84%", top:"43%" },
-
-  { left:"38%", top:"8%" },
-  { left:"43%", top:"68%" }
-];
-
 const postitColors = [
-  "#fff3a6",
-  "#ffb3ba",
-  "#ffd6a5",
-  "#fdffb6",
-  "#caffbf",
-  "#a0e7e5",
-  "#bdb2ff",
-  "#ffc6ff",
-  "#ffadad",
-  "#e0bbff"
+  "#fff3a6", "#ffd1dc", "#c9f7ff", "#d8ffd2", "#e5d4ff",
+  "#ffe0b5", "#ffb3ba", "#baffc9", "#bae1ff", "#ffffba"
 ];
 
 function renderLivePostits(){
@@ -5367,20 +5344,13 @@ guestMessageBtn.addEventListener("click", async ()=>{
 
   if(!text) return;
 
-  await db.collection("guestbook").add({
-    message:text,
-    hidden:false,
-    createdAt:firebase.firestore.FieldValue.serverTimestamp()
-  });
-
-  livePostits.unshift(text);
-  livePostits = livePostits.slice(0,10);
-
-  renderLivePostits();
-
-  guestMessageInput.value = "";
-
+ await db.collection("guestbook").add({
+  message:text,
+  hidden:false,
+  createdAt:firebase.firestore.FieldValue.serverTimestamp()
 });
+
+guestMessageInput.value = "";
 
 guestMessageInput.addEventListener("keydown",(e)=>{
 
