@@ -5280,9 +5280,11 @@ db.collection("guestbook")
   guestbookStage.innerHTML = "";
   firebaseMailboxList.innerHTML = "";
 
-  const visibleDocs = snapshot.docs.filter(doc=>{
+ const visibleDocs = snapshot.docs
+  .filter(doc=>{
     return doc.data().hidden !== true;
-  });
+  })
+  .slice(0,10);
 
   visibleDocs.forEach((doc,index)=>{
 
