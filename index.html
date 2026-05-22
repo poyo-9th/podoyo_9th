@@ -1130,6 +1130,7 @@ overflow-wrap:anywhere;
 
 #hiddenMailboxSection{
   margin-top:22px;
+  display:none;
 }
 
 #hiddenMailboxSection.show{
@@ -2468,22 +2469,17 @@ STEP 3
       </p>
     </div>
 
-    <div id="hiddenMailboxSection">
-
-      <h3>숨김 메시지</h3>
-
-      <div id="hiddenMailboxList"></div>
-    
-
+<div id="hiddenMailboxSection">
+  <h3>숨김 메시지</h3>
+  <div id="hiddenMailboxList"></div>
 </div>
     
 </div>
-  
 </div>
 
-  </div>
 </div>
-  
+</div>
+
   <!-- 5페이지 -->
   <div class="page gradient last-page-bg">
     <div class="page5-text">
@@ -4636,6 +4632,48 @@ const postitColors = [
   "#ffe0b5", "#ffb3ba", "#baffc9", "#bae1ff", "#ffffba"
 ];
 
+const postitColors = [
+  "#fff3a6",
+  "#ffb3ba",
+  "#ffd6a5",
+  "#fdffb6",
+  "#caffbf",
+  "#a0e7e5",
+  "#bdb2ff",
+  "#ffc6ff",
+  "#ffadad",
+  "#e0bbff"
+];
+
+let adminMode = false;
+
+window.toggleGuestAdmin = function(){
+
+  adminMode = !adminMode;
+
+  const hiddenMailboxSection =
+    document.getElementById("hiddenMailboxSection");
+
+  const hiddenMailboxList =
+    document.getElementById("hiddenMailboxList");
+
+  if(hiddenMailboxSection){
+
+    hiddenMailboxSection.style.display =
+      adminMode ? "block" : "none";
+
+  }
+
+  if(!adminMode && hiddenMailboxList){
+    hiddenMailboxList.innerHTML = "";
+  }
+
+  alert(adminMode ? "관리자 모드 ON" : "관리자 모드 OFF");
+
+};
+
+function renderLivePostits(){
+
 /* 명확하면 차단: 저장 X / 표시 X */
 /* 명확하면 차단: 저장 X / 표시 X */
 const hardBlockRules = {
@@ -4999,8 +5037,6 @@ function renderMailbox(){
   if(adminMode){
 
     hiddenMailboxSection.style.display = "block";
-    hiddenMailboxSection.classList.add("show");
-
     hiddenMailboxList.innerHTML = "";
 
     hiddenList
@@ -5072,7 +5108,6 @@ function renderMailbox(){
   }else{
 
     hiddenMailboxSection.style.display = "none";
-    hiddenMailboxSection.classList.remove("show");
 
   }
 }
@@ -5328,18 +5363,33 @@ db.collection("guestbook")
 .onSnapshot(snapshot=>{
 
   firebaseMailboxList.innerHTML = "";
+  hiddenMailboxList.innerHTML = "";
 
   snapshot.docs.forEach((doc)=>{
 
     const data = doc.data();
 
-    const item = document.createElement("div");
-    item.className = "mailbox-item";
-    item.textContent = data.hidden
-      ? "[숨김] " + data.message
-      : data.message;
+if(data.hidden === true){
 
-    firebaseMailboxList.appendChild(item);
+  if(adminMode){
+
+    const hiddenItem = document.createElement("div");
+    hiddenItem.className = "mailbox-item";
+    hiddenItem.textContent = data.message;
+
+    hiddenMailboxList.appendChild(hiddenItem);
+
+  }
+
+}else{
+
+  const item = document.createElement("div");
+  item.className = "mailbox-item";
+  item.textContent = data.message;
+
+  firebaseMailboxList.appendChild(item);
+
+}
 
   });
 
