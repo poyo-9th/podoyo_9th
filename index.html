@@ -2224,6 +2224,69 @@ transform:translateY(0) scale(1);
 .p4{ left:725px; top:40px; --r:8deg;   transform:rotate(8deg); }
 .p5{ left:945px; top:75px; --r:15deg;  transform:rotate(15deg); }
   
+/* 방명록 테스트용 모바일 보정 */
+.guestbook-test-mode #intro{
+  display:none !important;
+}
+
+.guestbook-test-mode #main{
+  display:block !important;
+}
+
+.guestbook-test-mode #uiLayer{
+  display:none !important;
+}
+
+.guestbook-test-mode #pages{
+  transform:none !important;
+}
+
+.guestbook-test-mode .page{
+  display:none !important;
+}
+
+.guestbook-test-mode .page-4{
+  display:flex !important;
+  opacity:1 !important;
+  transform:none !important;
+  position:fixed !important;
+  inset:0 !important;
+}
+
+@media (max-width:768px){
+  .guestbook-input-box{
+    width:88%;
+    bottom:4%;
+    padding:12px;
+    gap:8px;
+  }
+
+  .guestbook-input-box input{
+    width:100%;
+    padding:14px;
+    font-size:1rem;
+  }
+
+  .guestbook-input-box button{
+    padding:12px 14px;
+    font-size:.85rem;
+    white-space:nowrap;
+  }
+
+  .guestbook-postit{
+    width:180px;
+    min-height:130px;
+    max-height:170px;
+    font-size:1.05rem;
+    padding:18px 14px 14px;
+  }
+
+  #promiseChalkText{
+    font-size:2.1rem;
+    width:86%;
+  }
+}
+
 </style>
 </head>
 
@@ -2564,6 +2627,27 @@ STEP 3
 </div> <!-- game overlay 끝 -->
   
 <script>
+
+const TEST_GUESTBOOK_ONLY = true;
+
+if(TEST_GUESTBOOK_ONLY){
+
+  document.body.classList.add("guestbook-test-mode");
+
+  window.addEventListener("load",()=>{
+
+    document.getElementById("intro").style.display="none";
+
+    document.getElementById("main").style.display="block";
+
+    document.getElementById("uiLayer").style.display="none";
+
+    move(3);
+
+  });
+
+}
+  
 const introVideo=document.getElementById("introVideo");
 const title=document.getElementById("title");
 const btn=document.getElementById("enterBtn");
@@ -5197,7 +5281,7 @@ db.collection("promises")
     chalkText.textContent = latestPromise.message;
   }
 });
-</script> 
   
+</script> 
 </body>
 </html>
