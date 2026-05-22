@@ -5298,35 +5298,6 @@ db.collection("guestbook")
   })
   .slice(0,10);
 
-  visibleDocs.forEach((doc,index)=>{
-
-    const data = doc.data();
-
-    const postit = document.createElement("div");
-    postit.className = "guestbook-postit show";
-    postit.textContent = data.message;
-    postit.dataset.id = doc.id;
-
-    const pos = safePositions[index % safePositions.length];
-    const color = postitColors[index % postitColors.length];
-    const r = Math.random() * 16 - 8;
-
-    postit.style.left = pos.left;
-    postit.style.top = pos.top;
-    postit.style.background = color;
-    postit.style.setProperty("--rotate", r + "deg");
-
-    postit.addEventListener("click", async ()=>{
-      const ok = confirm("이 포스트잇을 숨길까요?");
-      if(!ok) return;
-
-      await db.collection("guestbook").doc(doc.id).update({
-        hidden:true
-      });
-    });
-
-    guestbookStage.appendChild(postit);
-
     const item = document.createElement("div");
     item.className = "mailbox-item";
     item.textContent = data.message;
@@ -5358,6 +5329,18 @@ db.collection("promises")
     chalkText.style.display = "flex";
     chalkText.textContent = latestPromise.message;
   }
+});
+
+document.getElementById("guestMessageInput").addEventListener("keydown", function(e){
+
+  if(e.key === "Enter"){
+
+    e.preventDefault();
+
+    document.getElementById("guestMessageBtn").click();
+
+  }
+
 });
   
 </script> 
