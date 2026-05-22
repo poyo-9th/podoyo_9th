@@ -1,0 +1,5203 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>포요 9주년</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+@font-face {
+  font-family: 'SuperMario256';
+  src: url('fonts/SuperMario256.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+  
+@font-face {
+font-family: 'Jalnan';
+src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff') format('woff');
+}
+
+@font-face {
+font-family: 'NeoDunggeunGothicPro';
+src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/NeoDunggeunmoPro-Regular.woff2') format('woff2');
+font-weight: normal;
+font-display: swap;
+}
+
+@font-face {
+  font-family: 'SchoolSafeStoneWall';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/HakgyoansimDoldamB.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+
+html,body{ background:#000;
+margin:0;
+padding:0;
+font-family:'Fredoka',sans-serif;
+overflow:hidden;
+}
+
+/* INTRO */
+#intro{position:fixed;inset:0;z-index:9999;}
+#intro video{width:100%;height:100%;object-fit:cover;display:block;background:#000;}
+
+#introText{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+text-align:center;
+}
+
+#title{
+font-size:5rem;
+font-weight:900;
+opacity:0;
+visibility:hidden;
+background:linear-gradient(45deg,#cdb4ff,#b8f2e6);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+transition:1s;
+}
+
+#enterBtn{
+margin-top:20px;
+padding:18px 60px;
+border-radius:40px;
+font-size:1.6rem;
+font-weight:800;
+opacity:0;
+visibility:hidden;
+background:linear-gradient(45deg,#cdb4ff,#b8f2e6);
+transition:1s;
+}
+
+#skipBtn{
+position:fixed;
+top:20px;
+right:20px;
+z-index:100000;
+}
+
+/* MAIN */
+#main{position:fixed;inset:0;display:none;}
+
+/* UI */
+#uiLayer{
+position:fixed;
+inset:0;
+z-index:2147483647;
+pointer-events:none;
+display:none;
+}
+
+.top-ui,.volume,.dots{pointer-events:auto;}
+
+.top-ui{
+position:fixed;
+top:20px;
+left:50%;
+transform:translateX(-50%);
+display:flex;
+gap:18px;
+padding:14px 24px;
+background:rgba(255,255,255,0.18);
+backdrop-filter:blur(14px);
+border-radius:999px;
+}
+
+.top-btn{
+display:flex;
+align-items:center;
+gap:10px;
+padding:10px 18px;
+font-weight:900;
+font-size:1.1rem;
+cursor:pointer;
+}
+
+.top-btn img{width:24px;height:24px;}
+
+.volume{
+position:fixed;
+top:20px;
+right:20px;
+}
+
+#volumeToggle{
+width:44px;
+height:44px;
+border:none;
+border-radius:50%;
+background:rgba(255,255,255,0.22);
+backdrop-filter:blur(14px);
+font-size:1.35rem;
+cursor:pointer;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+.dots{
+position:fixed;
+right:20px;
+top:50%;
+transform:translateY(-50%);
+}
+
+.dot{
+  width:14px;
+  height:14px;
+  margin:14px 0;
+  border-radius:50%;
+
+  background:rgba(255,255,255,.75);
+  opacity:.75;
+
+  box-shadow:
+    0 0 8px rgba(255,255,255,.7),
+    0 0 16px rgba(201,183,255,.45);
+}
+
+.dot.active{
+  background:#b8f2e6;
+  opacity:1;
+  transform:scale(1.45);
+
+  box-shadow:
+    0 0 10px #b8f2e6,
+    0 0 22px #b8f2e6,
+    0 0 36px rgba(201,183,255,.8);
+}
+
+/* PAGES */
+#pages{height:100vh;position:relative;}
+
+.page{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+transition:transform .6s ease, opacity .6s ease;
+opacity:0.3;
+}
+
+.page.active{opacity:1;}
+
+.gradient{
+background:linear-gradient(135deg,#d9cfff,#b8f2e6);
+}
+
+.main-login-page{
+  position:relative;
+
+  background:
+    linear-gradient(
+      rgba(0,0,0,.18),
+      rgba(0,0,0,.18)
+    ),
+    url("podopoyo-LOGIN.jpg")
+    center/cover no-repeat;
+}
+
+.last-page-bg{
+  position:relative;
+
+  background:
+    linear-gradient(
+      rgba(0,0,0,.18),
+      rgba(0,0,0,.18)
+    ),
+    url("podopoyo-Last.png")
+    center/cover no-repeat;
+}
+
+.tv-static{
+background:linear-gradient(180deg,#00110a,#000);
+color:#00ff88;
+position:relative;
+overflow:hidden;
+}
+
+/* 2페이지 */
+.tv-static h1{
+font-size:1.8rem;
+opacity:0.5;
+letter-spacing:2px;
+margin-bottom:10px;
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.logo{
+height:28px;
+width:auto;
+}
+
+.tv-static .signal-text{
+margin-top:10px;
+margin-bottom:40px;
+text-align:center;
+line-height:1.4;
+font-size:2.8rem;
+font-weight:900;
+z-index:1;
+}
+
+.tv-static .signal-text strong{
+font-size:3.2rem;
+}
+
+/* binary */
+.binary-bg{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:200%;
+font-size:14px;
+line-height:14px;
+white-space:pre;
+color:#00ff88;
+opacity:0.07;
+animation:binaryMove 20s linear infinite;
+z-index:0;
+pointer-events:none;
+}
+
+@keyframes binaryMove{
+from{transform:translateY(0);}
+to{transform:translateY(-50%);}
+}
+
+/* STEP */
+.signal-box{
+margin-top:10px;
+text-align:center;
+width:80%;
+max-width:600px;
+z-index:1;
+}
+
+.step{
+margin:15px auto;
+padding:20px;
+border:1px solid rgba(0,255,136,0.4);
+cursor:pointer;
+opacity:0.3;
+transition:0.3s;
+}
+
+.step.active{
+opacity:1;
+border:2px solid #00ff88;
+transform:scale(1.05);
+}
+
+.step.locked{
+opacity:0.15;
+pointer-events:auto;
+}
+
+.content.step-unlocking{
+  position:relative;
+  display:inline-block;
+  color:#00ff88;
+  animation:lockedGlitchOut 1.15s steps(2,end) forwards;
+}
+
+.content.step-unlocked{
+  animation:unlockedTextIn .55s ease forwards;
+}
+
+@keyframes lockedGlitchOut{
+  0%{
+    opacity:1;
+    transform:translate(0,0);
+    text-shadow:
+      2px 0 #ff0055,
+      -2px 0 #00ffff;
+  }
+
+  20%{
+    transform:translate(-3px,2px);
+    text-shadow:
+      -3px 0 #ff0055,
+      3px 0 #00ffff;
+  }
+
+  45%{
+    transform:translate(3px,-2px);
+    opacity:.8;
+  }
+
+  70%{
+    transform:translate(-2px,1px);
+    opacity:.45;
+  }
+
+  100%{
+    opacity:0;
+    transform:translate(0,0) scale(.96);
+    filter:blur(3px);
+  }
+}
+
+@keyframes unlockedTextIn{
+  from{
+    opacity:0;
+    transform:translateY(6px);
+    filter:blur(4px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0);
+    filter:blur(0);
+  }
+}
+
+/* STEP CARD */
+#stepOverlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.5);
+display:flex;
+justify-content:center;
+align-items:center;
+opacity:0;
+pointer-events:none;
+transition:0.3s;
+z-index:1000;
+}
+
+#stepOverlay.show{
+opacity:1;
+pointer-events:auto;
+}
+
+#stepCard{
+background:#000;
+border:1px solid #00ff88;
+padding:50px;
+min-width:500px;
+max-width:760px;
+min-height:260px;
+text-align:center;
+font-family:'NeoDunggeunGothicPro',sans-serif;
+overflow:hidden;
+position:relative;
+}
+
+#stepCard.step1-card{
+width:760px;
+max-width:82vw;
+min-height:250px;
+padding:46px 64px;
+box-sizing:border-box;
+}
+
+#stepCard.step2-card{
+width:820px;
+max-width:86vw;
+min-height:340px;
+padding:54px 62px;
+box-sizing:border-box;
+}
+
+#stepCard.step3-card{
+width:840px;
+max-width:88vw;
+min-height:430px;
+padding:56px 64px;
+box-sizing:border-box;
+}
+
+#yearCounter{
+font-size:4rem;
+margin-bottom:20px;
+color:#00ff88;
+}
+
+#stepCard.step1-card #yearCounter{
+font-size:4.4rem;
+margin-bottom:24px;
+}
+
+#stepCard.step1-card #stepContent{
+font-size:1.45rem;
+line-height:1.75;
+}
+
+#stepContent{
+font-size:1.6rem;
+line-height:1.6;
+color:#00ff88;
+text-align:center;
+position:relative;
+z-index:2;
+}
+
+/* STEP2 POPUP */
+.step2-stage{
+position:relative;
+width:100%;
+min-height:340px;
+display:flex;
+justify-content:center;
+align-items:center;
+color:#00ff88;
+text-align:center;
+}
+
+.origin-number{
+font-size:5rem;
+font-weight:900;
+letter-spacing:2px;
+animation:numberLift 1.2s ease forwards;
+animation-delay:.8s;
+}
+
+@keyframes numberLift{
+0%{transform:translateY(0);opacity:1;}
+100%{transform:translateY(-130px);opacity:0;}
+}
+
+.origin-message{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+width:90%;
+max-width:760px;
+opacity:0;
+font-size:1.55rem;
+font-weight:700;
+line-height:1.9;
+white-space:normal;
+text-align:center;
+animation:
+originMessageIn .8s ease forwards 1.9s,
+originMessageOut .8s ease forwards 5.7s;
+}
+
+@keyframes originMessageIn{
+0%{opacity:0;transform:translate(-50%,-42%);}
+100%{opacity:1;transform:translate(-50%,-50%);}
+}
+
+@keyframes originMessageOut{
+0%{opacity:1;transform:translate(-50%,-50%);}
+100%{opacity:0;transform:translate(-58%,-50%);}
+}
+
+.origin-layout{
+position:absolute;
+inset:0;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:26px;
+opacity:0;
+animation:originLayoutIn .8s ease forwards;
+animation-delay:6.7s;
+}
+
+@keyframes originLayoutIn{
+0%{opacity:0;transform:translateX(-20px);}
+100%{opacity:1;transform:translateX(0);}
+}
+
+.origin-left{
+width:190px;
+height:190px;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+.origin-left-line{
+width:170px;
+height:3px;
+background:#00ff88;
+opacity:.85;
+box-shadow:0 0 10px rgba(0,255,136,.45);
+}
+
+.origin-right{
+width:450px;
+font-size:1.32rem;
+font-weight:700;
+line-height:2;
+text-align:left;
+white-space:pre-line;
+}
+
+.typing-cursor{
+display:inline-block;
+width:10px;
+height:1.15em;
+margin-left:4px;
+background:#00ff88;
+vertical-align:-0.18em;
+animation:cursorBlink .7s infinite;
+box-shadow:0 0 8px rgba(0,255,136,.55);
+}
+
+.final-cursor{
+display:inline-block;
+width:12px;
+height:1.15em;
+margin-left:8px;
+background:#00ff88;
+vertical-align:-0.16em;
+animation:cursorBlink .75s infinite;
+box-shadow:0 0 10px rgba(0,255,136,.7);
+}
+
+@keyframes cursorBlink{
+0%,45%{opacity:1;}
+46%,100%{opacity:0;}
+}
+
+/* STEP3 POPUP */
+.step3-stage{
+position:relative;
+width:100%;
+min-height:360px;
+display:flex;
+align-items:center;
+justify-content:center;
+color:#00ff88;
+overflow:hidden;
+}
+
+.step3-bg{
+  position:absolute;
+  inset:-56px -64px;
+  background:url('podopoyo.jpg') center/cover no-repeat;
+  opacity:0;
+  transition:opacity 1.4s ease;
+  z-index:0;
+}
+
+.step3-bg.show{
+opacity:.55;
+}
+
+.step3-bg::after{
+content:"";
+position:absolute;
+inset:0;
+background:rgba(0,0,0,.38);
+}
+
+.step3-blackout{
+position:absolute;
+inset:-56px -64px;
+background:#000;
+opacity:0;
+z-index:4;
+pointer-events:none;
+transition:opacity 0.25s ease;
+}
+
+.step3-blackout.show{
+opacity:1;
+}
+
+.step3-write{
+position:relative;
+z-index:2;
+width:100%;
+min-height:360px;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+transition:opacity 2s ease;
+
+background:
+  linear-gradient(rgba(0,0,0,.48), rgba(0,0,0,.48)),
+  url('podopoyo-promise.jpg') center/cover no-repeat;
+
+border-radius:18px;
+overflow:hidden;
+}
+
+.step3-write.fade-out{
+opacity:0;
+}
+
+.step3-title{
+font-size:1.45rem;
+font-weight:700;
+line-height:1.6;
+margin-bottom:74px;
+text-align:center;
+}
+
+.step3-line-wrap{
+width:78%;
+max-width:620px;
+position:relative;
+}
+
+#promiseInput{
+width:100%;
+height:46px;
+background:transparent;
+border:none;
+border-bottom:2px solid #00ff88;
+outline:none;
+resize:none;
+overflow:hidden;
+color:#00ff88;
+font-family:'NeoDunggeunGothicPro',sans-serif;
+font-size:1.35rem;
+font-weight:700;
+line-height:46px;
+text-align:center;
+caret-color:#00ff88;
+}
+
+#promiseInput::placeholder{
+color:rgba(0,255,136,.38);
+}
+
+/* 👇 여기 추가 */
+#promiseCodeInput{
+  width:100%;
+  height:46px;
+  background:transparent;
+  border:none;
+  border-bottom:2px solid #00ff88;
+  outline:none;
+
+  color:#00ff88;
+  font-family:'NeoDunggeunGothicPro',sans-serif;
+  font-size:1.35rem;
+  font-weight:700;
+  line-height:46px;
+  text-align:center;
+}
+
+#promiseCodeInput::placeholder{
+  color:rgba(0,255,136,.38);
+}
+
+.step3-final{
+position:absolute;
+inset:0;
+z-index:3;
+display:flex;
+align-items:center;
+justify-content:center;
+opacity:0;
+transition:opacity 1.4s ease;
+pointer-events:none;
+}
+
+.step3-final.show{
+opacity:1;
+}
+
+.step3-final-text{
+font-size:2.25rem;
+font-weight:900;
+line-height:1.5;
+text-align:center;
+text-shadow:0 0 14px rgba(0,255,136,.7);
+}
+
+.page .main-title{
+font-size:6.2rem !important;
+font-weight:900 !important;
+
+color:#ffffff;
+
+text-shadow:
+  0 0 12px rgba(0,0,0,.35),
+  0 0 30px rgba(180,120,255,.18);
+}
+  
+/* 5페이지 */
+.page5-text{
+text-align:center;
+
+font-size:4.1rem !important;
+line-height:1.5 !important;
+
+font-family:'Jalnan' !important;
+
+color:#f8f8f8;
+
+text-shadow:
+  0 0 10px rgba(0,0,0,.28),
+  0 0 24px rgba(180,120,255,.14);
+}
+
+.anniversary-spacing{
+  font-weight:800;
+}
+
+.page .sub-title{
+font-size:2.8rem !important;
+font-family:'Jalnan' !important;
+
+color:#f8f8f8;
+
+text-shadow:
+  0 0 10px rgba(0,0,0,.28),
+  0 0 24px rgba(180,120,255,.14);
+}
+
+/* OVERLAY */
+.overlay{
+position:fixed;
+inset:0;
+z-index:9999999;
+display:none;
+flex-direction:column;
+opacity:0;
+transition:0.4s ease;
+overflow-y:auto;
+padding-top:120px;
+background:linear-gradient(135deg,#d9cfff,#b8f2e6);
+pointer-events:none;
+}
+
+.overlay.show{
+display:flex;
+opacity:1;
+pointer-events:auto;
+}
+
+.overlay-content{
+width:100%;
+text-align:center;
+padding:40px;
+}
+
+.hide-dots .dots{display:none;}
+
+/* 분필 글씨 */
+#promiseChalkText{
+  position:absolute;
+
+  top:50%;
+  left:50%;
+
+  width:78%;
+
+  transform:translate(-50%,-50%);
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  text-align:center;
+
+  font-family:'SchoolSafeStoneWall', sans-serif;
+
+  font-size:4.8rem;
+  line-height:1.45;
+
+  color:rgba(245,255,235,.95);
+
+  text-shadow:
+    0 0 3px rgba(255,255,255,.85),
+    2px 2px 0 rgba(255,255,255,.12);
+
+  opacity:.95;
+
+  z-index:120;
+
+  pointer-events:none;
+
+  word-break:keep-all;
+}
+
+ /* 👇 여기 추가 */
+.library-page,
+.library-page input,
+.library-page button,
+#promiseChalkText,
+.guestbook-postit{
+  font-family:'SchoolSafeStoneWall', sans-serif;
+}
+  
+.library-page,
+.library-page input,
+.library-page button,
+#promiseChalkText,
+.guestbook-postit{
+  font-family:'SchoolSafeStoneWall', sans-serif;
+}
+
+/* 4페이지 배경 */
+.library-page{
+  position:relative;
+  background:url("poyo_background.png") no-repeat center center/cover;
+}
+
+/* 방명록 전체 */
+#guestbook-module{
+  position:relative;
+  width:100%;
+  height:100%;
+  z-index:5;
+}
+
+#guestbookStage{
+  position:absolute;
+  inset:0;
+}
+
+/* 👇 여기 추가 */
+.guestbook-input-box{
+  position:absolute;
+  left:50%;
+  bottom:7%;
+  transform:translateX(-50%);
+
+  display:flex;
+  gap:16px;
+
+  padding:22px 26px;
+
+  background:rgba(255,255,255,0.88);
+
+  border-radius:24px;
+
+  z-index:20;
+}
+  
+.guestbook-input-box input{
+  width:720px;
+  padding:24px;
+
+  border:none;
+  outline:none;
+  border-radius:16px;
+
+  font-size:1.4rem;
+}
+
+.guestbook-input-box button{
+  border:none;
+  padding:18px 24px;
+  border-radius:16px;
+
+  cursor:pointer;
+  font-weight:800;
+  font-size:1rem;
+
+  background:linear-gradient(135deg,#c9b7ff,#9fffe0);
+}
+
+/* 포스트잇 */
+.guestbook-postit{
+  position:absolute;
+
+  width:330px;
+  min-height:240px;
+  max-height:285px;
+
+  padding:30px 24px 24px;
+
+  color:#4a372b;
+  font-size:1.9rem;
+  line-height:1.32;
+  text-align:center;
+
+  border-radius:8px 8px 16px 16px;
+  box-shadow:0 14px 28px rgba(0,0,0,.3);
+
+display:flex;
+flex-direction:column;
+
+align-items:center;
+justify-content:center;
+
+text-align:center;
+
+padding-top:10px;
+box-sizing:border-box;
+
+white-space:normal;
+word-break:keep-all;
+overflow-wrap:anywhere;
+  
+  opacity:0;
+  z-index:15;
+  pointer-events:none;
+}
+
+.guestbook-postit::before{
+  content:"";
+  position:absolute;
+  top:9px;
+  left:50%;
+  transform:translateX(-50%);
+  width:58px;
+  height:14px;
+  border-radius:999px;
+  background:rgba(255,255,255,.55);
+}
+
+.guestbook-postit.show{
+  animation:postitPop .45s ease forwards;
+}
+
+@keyframes postitPop{
+  from{
+    opacity:0;
+    transform:scale(.35) rotate(-10deg);
+  }
+
+  to{
+    opacity:1;
+    transform:scale(1) rotate(var(--rotate));
+  }
+}
+
+/* 📬 우편함 버튼 */
+#mailboxOpenBtn{
+  position:absolute;
+  right:34px;
+  bottom:32px;
+
+  width:74px;
+  height:74px;
+
+  border:none;
+  border-radius:50%;
+
+  font-size:2rem;
+  cursor:pointer;
+
+  background:rgba(255,255,255,.18);
+  backdrop-filter:blur(12px);
+
+  box-shadow:0 10px 24px rgba(0,0,0,.25);
+
+  z-index:50;
+
+  transition:.25s;
+}
+
+#mailboxOpenBtn:hover{
+  transform:scale(1.08) rotate(-6deg);
+}
+
+/* overlay */
+#mailboxOverlay{
+  position:absolute;
+  inset:0;
+
+  background:rgba(0,0,0,.45);
+  backdrop-filter:blur(6px);
+
+  display:none;
+  align-items:center;
+  justify-content:center;
+
+  z-index:200;
+}
+
+/* popup */
+#mailboxPopup{
+  width:760px;
+  height:640px;
+
+  border-radius:30px;
+
+  background:rgba(255,255,255,.14);
+  backdrop-filter:blur(18px);
+
+  border:1px solid rgba(255,255,255,.22);
+
+  box-shadow:0 20px 50px rgba(0,0,0,.35);
+
+  padding:30px;
+
+  overflow:hidden;
+
+  animation:mailboxPopupShow .35s ease;
+}
+
+@keyframes mailboxPopupShow{
+  from{
+    opacity:0;
+    transform:scale(.88);
+  }
+
+  to{
+    opacity:1;
+    transform:scale(1);
+  }
+}
+
+/* header */
+.mailbox-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  margin-bottom:24px;
+}
+
+.mailbox-header h2{
+  font-size:2rem;
+  color:white;
+}
+
+#mailboxCloseBtn{
+  border:none;
+
+  padding:12px 18px;
+
+  border-radius:14px;
+
+  cursor:pointer;
+
+  font-size:1rem;
+  font-weight:700;
+
+  background:white;
+}
+
+/* 리스트 */
+#mailboxList{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+
+  overflow-y:auto;
+  overscroll-behavior:contain;
+
+  max-height:320px;
+
+  padding-right:6px;
+}
+
+#hiddenMailboxList{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+
+  overflow-y:auto;
+  overscroll-behavior:contain;
+
+  max-height:220px;
+
+  padding-right:6px;
+}
+
+/* 메시지 카드 */
+.mailbox-item{
+  padding:18px 20px;
+
+  border-radius:18px;
+
+  background:rgba(255,255,255,.14);
+
+  color:white;
+
+  line-height:1.5;
+  font-size:1.1rem;
+
+  word-break:keep-all;
+}
+
+/* empty */
+.mailbox-empty{
+  color:white;
+  opacity:.7;
+}
+
+#hiddenMailboxSection{
+  margin-top:22px;
+}
+
+#hiddenMailboxSection.show{
+  display:block;
+}
+  
+.game-overlay{
+  background:#050505;
+  overflow:hidden;
+  padding-top:0;
+}
+
+.game-start-screen{
+  position:relative;
+  width:100%;
+  height:100vh;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  overflow:hidden;
+}
+
+.game-bg-left,
+.game-bg-right{
+  position:absolute;
+  top:0;
+
+  width:50%;
+  height:100%;
+
+  background-size:cover;
+  background-position:center;
+
+  filter:blur(3px) brightness(.65);
+  opacity:.9;
+
+  transform:scale(1.08);
+}
+
+.game-bg-left{
+  left:0;
+}
+
+.game-bg-right{
+  right:0;
+}
+
+.game-dark{
+  position:absolute;
+  inset:0;
+
+  background:
+  radial-gradient(circle,
+  rgba(0,0,0,.15),
+  rgba(0,0,0,.75));
+
+  z-index:1;
+}
+
+.game-start-content{
+  position:relative;
+  z-index:5;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+
+  text-align:center;
+}
+
+  .game-title{
+  font-size:4rem;
+  font-weight:900;
+
+  color:white;
+
+  margin-bottom:24px;
+
+  text-shadow:
+  0 0 18px rgba(201,183,255,.9),
+  0 0 30px rgba(159,255,224,.45);
+}
+
+.game-desc{
+  color:white;
+
+  font-size:1.2rem;
+  line-height:1.8;
+
+  opacity:.9;
+
+  margin-bottom:34px;
+}
+
+#gameNickname{
+  width:360px;
+
+  padding:18px 20px;
+
+  border:none;
+  outline:none;
+
+  border-radius:18px;
+
+  font-size:1.1rem;
+  text-align:center;
+
+  margin-bottom:20px;
+
+  background:rgba(255,255,255,.92);
+}
+
+#gameStartBtn{
+  border:none;
+
+  padding:18px 36px;
+
+  border-radius:18px;
+
+  cursor:pointer;
+
+  font-size:1.1rem;
+  font-weight:900;
+
+  background:
+  linear-gradient(135deg,#c9b7ff,#9fffe0);
+
+  transition:.25s;
+}
+
+#gameStartBtn:hover{
+  transform:scale(1.05);
+}
+
+.game-play-screen{
+  display:none;
+  position:relative;
+  width:100%;
+  height:100vh;
+  background:radial-gradient(circle,#1b1430,#050505);
+  overflow:hidden;
+  color:white;
+}
+
+.game-hud{
+  position:absolute;
+  top:28px;
+  left:34px;
+  right:34px;
+  display:flex;
+  justify-content:space-between;
+  font-size:1.5rem;
+  font-weight:900;
+  z-index:5;
+}
+
+#gameQuestionText{
+  position:absolute;
+  top:110px;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:4.2rem;
+  font-weight:900;
+  line-height:1.2;
+  
+  text-align:center;
+  text-shadow:0 0 18px rgba(159,255,224,.6);
+  z-index:5;
+}
+
+#gameQuestionText small{
+  display:block;
+  margin-top:12px;
+  font-size:1.35rem;
+  opacity:.9;
+}
+
+.game-vs-area{
+  width:100%;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:52px;
+}
+
+.game-choice{
+  width:43vw;
+  max-width:760px;
+  border:none;
+  border-radius:26px;
+  overflow:hidden;
+  cursor:pointer;
+  background:#111;
+  box-shadow:0 20px 50px rgba(0,0,0,.45);
+  transition:.2s;
+
+  display:flex;
+  flex-direction:column;
+}
+
+.game-choice:hover{
+  transform:scale(1.035);
+  box-shadow:0 0 34px rgba(159,255,224,.5);
+}
+
+.game-choice img{
+  width:100%;
+  aspect-ratio:16/9;
+  height:auto;
+  object-fit:cover;
+  background:#000;
+  display:block;
+}
+
+.game-vs{
+  font-family:'SuperMario256';
+  font-size:6.5rem;
+  font-weight:900;
+
+  display:flex;
+  align-items:center;
+  gap:8px;
+
+  z-index:5;
+}
+
+.game-v{
+  color:#ff3b30;
+
+  text-shadow:
+    0 0 10px rgba(255,59,48,.9),
+    0 0 22px rgba(255,59,48,.7);
+}
+
+.game-s{
+  color:#3b82ff;
+
+  text-shadow:
+    0 0 10px rgba(59,130,255,.9),
+    0 0 22px rgba(59,130,255,.7);
+}
+
+#gameCountdownOverlay{
+  position:absolute;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:80;
+
+  font-family:'SuperMario256';
+  font-size:16rem;
+  font-weight:900;
+  color:#52ff8f;
+
+  background:rgba(0,0,0,.35);
+
+  text-shadow:
+    0 0 20px #52ff8f,
+    0 0 45px #9fffe0;
+}
+
+.thumb-hint{
+  display:none;
+  padding:12px 0 14px;
+
+  font-size:2rem;
+  font-weight:900;
+  letter-spacing:1px;
+  
+  color:#ffe44d;
+
+  background:rgba(0,0,0,.72);
+
+  text-align:center;
+
+  text-shadow:
+    0 0 10px rgba(255,228,77,.8);
+}
+  
+#suddenNotice{
+  position:absolute;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:55;
+
+  font-size:5rem;
+  font-weight:900;
+  color:white;
+
+  background:rgba(0,0,0,.55);
+
+  text-shadow:
+    0 0 18px #ffdf7e,
+    0 0 36px #9fffe0;
+}
+
+#answerEffect{
+  position:absolute;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:65;
+
+  font-size:18rem;
+  font-weight:1000;
+  line-height:1;
+  -webkit-text-stroke:10px currentColor;
+  paint-order:stroke fill;
+
+  background:rgba(0,0,0,.18);
+  pointer-events:none;
+}
+
+#answerEffect.correct{
+  color:#52ff8f;
+  text-shadow:
+    0 0 18px rgba(82,255,143,.9),
+    0 0 44px rgba(82,255,143,.6);
+}
+
+#answerEffect.wrong{
+  color:#ff4f6d;
+  text-shadow:
+    0 0 18px rgba(255,79,109,.9),
+    0 0 44px rgba(255,79,109,.6);
+}
+  
+#gameResultScreen{
+  position:absolute;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:70;
+
+  background:rgba(0,0,0,.72);
+  backdrop-filter:blur(10px);
+}
+
+.game-result-card{
+  width:520px;
+  padding:44px 38px;
+  border-radius:30px;
+
+  background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.22);
+
+  text-align:center;
+  color:white;
+
+  box-shadow:0 20px 60px rgba(0,0,0,.45);
+}
+
+.game-result-card h2{
+  font-size:3.5rem;
+  margin:0 0 18px;
+
+  background:linear-gradient(
+  90deg,
+  #ff3b30,
+  #ffe44d,
+  #52ff8f,
+  #3b82ff
+);
+
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+#gameFinalScore{
+  font-size:1.7rem;
+  font-weight:900;
+  margin-bottom:30px;
+}
+
+.game-score-box{
+  position:absolute;
+  left:50%;
+  bottom:34px;
+  transform:translateX(-50%);
+
+  display:flex;
+  gap:28px;
+
+  padding:14px 26px;
+  border-radius:999px;
+
+  background:rgba(0,0,0,.55);
+  backdrop-filter:blur(12px);
+
+  font-size:1.6rem;
+  font-weight:900;
+
+  z-index:10;
+
+  box-shadow:
+    0 0 18px rgba(159,255,224,.35);
+}
+  
+.game-result-buttons{
+  display:flex;
+  justify-content:center;
+  gap:16px;
+}
+
+.game-result-buttons button{
+  border:none;
+  border-radius:16px;
+  padding:16px 24px;
+
+  cursor:pointer;
+
+  font-size:1rem;
+  font-weight:900;
+
+  background:linear-gradient(135deg,#c9b7ff,#9fffe0);
+}
+
+.memory-overlay{
+  background:#050510;
+  padding-top:0;
+  overflow:hidden;
+}
+
+.memory-film-intro{
+  position:absolute;
+  inset:0;
+  z-index:25;
+
+  background:
+    linear-gradient(
+      rgba(0,0,0,.32),
+      rgba(0,0,0,.32)
+    ),
+    url("memory_stage_bg.jpg")
+    center/cover no-repeat;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  opacity:1;
+  pointer-events:none;
+  overflow:hidden;
+
+  transition:opacity 1.4s ease;
+}
+
+.memory-film-intro.hide{
+  opacity:0;
+  pointer-events:none;
+  visibility:hidden;
+}
+
+.film-frame{
+  position:relative;
+  z-index:5;
+
+  width:78vw;
+  max-width:1180px;
+  aspect-ratio:16/9;
+
+  overflow:hidden;
+  border-radius:22px;
+
+  background:#000;
+
+  box-shadow:
+    0 0 55px rgba(201,183,255,.18),
+    0 0 110px rgba(159,255,224,.10),
+    inset 0 0 50px rgba(0,0,0,.65);
+}
+
+#filmClip{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+
+  opacity:.92;
+
+  filter:
+    contrast(1.05)
+    brightness(.92)
+    saturate(.92);
+
+  transition:
+    opacity .75s ease,
+    transform 3.8s ease,
+    filter .75s ease;
+}
+
+.film-crossfade{
+  animation:filmCrossFade 1.15s ease forwards;
+}
+
+@keyframes filmCrossFade{
+  from{
+    opacity:0;
+    transform:scale(1.025);
+    filter:blur(5px) brightness(.75);
+  }
+  to{
+    opacity:.92;
+    transform:scale(1);
+    filter:
+      contrast(1.05)
+      brightness(.92)
+      saturate(.92);
+  }
+}
+
+#filmClip.film-fade{
+  opacity:0;
+  transform:scale(1.035);
+}
+
+#filmClip.first-fade-in{
+  opacity:0;
+  animation:firstFilmFadeIn 1.2s ease forwards;
+}
+
+@keyframes firstFilmFadeIn{
+  from{
+    opacity:0;
+    filter:blur(8px) brightness(.5);
+  }
+  to{
+    opacity:.92;
+    filter:
+      contrast(1.05)
+      brightness(.92)
+      saturate(.92);
+  }
+}
+  
+#filmClip.film-last{
+  transform:scale(1.06);
+  filter:
+    contrast(1.02)
+    brightness(.88)
+    saturate(.86);
+}
+
+  #filmClip.transition-soft{
+  transform:scale(1.06);
+  filter:blur(3px) brightness(1.15) saturate(1.1);
+}
+
+#filmClip.transition-strong{
+  transform:scale(1.16) rotate(.6deg);
+  filter:blur(8px) brightness(1.35) saturate(1.25);
+}
+
+  .film-frame.zoom-transition{
+  animation:filmZoomHit .7s ease both;
+}
+
+@keyframes filmZoomHit{
+  0%{transform:scale(1);}
+  45%{transform:scale(1.08);}
+  100%{transform:scale(1);}
+}
+
+.memory-film-intro .light-dust{
+  position:absolute;
+  inset:-20%;
+  z-index:2;
+  pointer-events:none;
+
+  background:
+    radial-gradient(circle at 20% 30%, rgba(255,255,255,.22) 0 1px, transparent 3px),
+    radial-gradient(circle at 34% 70%, rgba(184,242,230,.16) 0 2px, transparent 5px),
+    radial-gradient(circle at 62% 24%, rgba(205,180,255,.18) 0 2px, transparent 6px),
+    radial-gradient(circle at 78% 62%, rgba(255,255,255,.14) 0 1px, transparent 4px),
+    radial-gradient(circle at 90% 40%, rgba(255,255,255,.12) 0 2px, transparent 5px);
+
+  opacity:.8;
+  filter:blur(.5px);
+  animation:lightDustMove 10s ease-in-out infinite alternate;
+}
+
+@keyframes lightDustMove{
+  from{transform:translate(-18px,14px) scale(1);}
+  to{transform:translate(28px,-24px) scale(1.05);}
+}
+  
+  .memory-film-intro::before{
+  content:"";
+  position:absolute;
+  inset:-20%;
+  z-index:2;
+  pointer-events:none;
+
+  background:
+    radial-gradient(circle at 18% 30%, rgba(255,255,255,.16) 0 1px, transparent 2px),
+    radial-gradient(circle at 42% 66%, rgba(184,242,230,.12) 0 2px, transparent 4px),
+    radial-gradient(circle at 71% 24%, rgba(205,180,255,.12) 0 2px, transparent 5px),
+    radial-gradient(circle at 82% 78%, rgba(255,255,255,.10) 0 1px, transparent 3px);
+
+  opacity:.55;
+  filter:blur(.4px);
+  animation:memoryDustFloat 12s ease-in-out infinite alternate;
+}
+
+@keyframes memoryDustFloat{
+  from{
+    transform:translate(-20px, 12px) scale(1);
+  }
+  to{
+    transform:translate(28px, -22px) scale(1.04);
+  }
+}
+  
+/* 아주 약한 기억 노이즈 */
+.film-noise{
+  position:absolute;
+  inset:0;
+  z-index:3;
+  pointer-events:none;
+
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(255,255,255,.018) 0px,
+      rgba(255,255,255,.018) 1px,
+      transparent 1px,
+      transparent 5px
+    );
+
+  opacity:.22;
+  mix-blend-mode:screen;
+
+  animation:memoryFlicker 1.2s infinite ease-in-out;
+}
+
+/* 가장자리만 감성적으로 어둡게 */
+.memory-film-intro::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:4;
+  pointer-events:none;
+
+  background:
+    radial-gradient(circle at center,
+      transparent 46%,
+      rgba(0,0,0,.22) 72%,
+      rgba(0,0,0,.78) 100%);
+
+  opacity:.95;
+}
+
+@keyframes memoryFlicker{
+  0%,100%{opacity:.18;}
+  50%{opacity:.28;}
+}
+
+.memory-fragment-stage{
+  position:relative;
+  width:100%;
+  height:100vh;
+  overflow:hidden;
+  background:#050510;
+}
+
+.memory-bg-text{
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  z-index:1;
+
+  font-size:3.6rem;
+  font-weight:900;
+  line-height:1.35;
+  text-align:center;
+
+  color:white;
+  text-shadow:
+    0 0 18px rgba(255,255,255,.75),
+    0 0 36px rgba(159,255,224,.45);
+
+  opacity:0;
+  transition:opacity 1.4s ease, transform 1.4s ease;
+}
+
+.memory-bg-text.show{
+  opacity:.9;
+}
+
+#memoryFragments{
+  position:absolute;
+  inset:0;
+  z-index:3;
+}
+
+.memory-piece{
+  position:absolute;
+  width:380px;
+  aspect-ratio:auto;
+
+  padding:16px 16px 58px;
+  border-radius:4px;
+  overflow:visible;
+
+  background:#fffaf2;
+
+  box-shadow:
+    0 18px 38px rgba(0,0,0,.32),
+    0 0 28px rgba(255,255,255,.18);
+
+  opacity:0;
+  filter:blur(var(--piece-blur));
+  z-index:var(--piece-z);
+
+  transform:scale(1) rotate(var(--rotate));
+
+transition:
+  opacity .6s ease,
+  left 4s ease,
+  top 4s ease,
+  width 4s ease,
+  transform 4s ease,
+  filter 4s ease;
+}
+
+.memory-piece.ready{
+  opacity:.86;
+  animation:memoryFloat 4.8s ease-in-out infinite;
+}
+
+.memory-piece::before{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:-24px;
+  width:92px;
+  height:34px;
+  transform:translateX(-50%) rotate(var(--tape-rotate));
+  background:var(--tape-color);
+  opacity:.82;
+  z-index:5;
+}
+
+.memory-piece.pin::before{
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  top:-16px;
+  background:#e9d8c7;
+}
+
+.memory-piece.clip::before{
+  content:"📎";
+  background:none;
+  font-size:2.4rem;
+}
+
+.memory-piece video{
+  width:100%;
+  aspect-ratio:16/9;
+  height:auto;
+  object-fit:cover;
+  display:block;
+  border-radius:2px;
+  background:#000;
+}
+
+.memory-puzzle-tile{
+  position:absolute;
+  inset:0;
+  background-image:url("poyo_9th_memory.png");
+  background-size:300% 300%;
+  background-position:var(--puzzle-pos);
+  opacity:0;
+  transition:opacity 1s ease;
+  z-index:2;
+}
+
+.memory-piece.merge{
+  padding:0;
+  background:transparent;
+  box-shadow:none;
+  border-radius:0;
+  overflow:hidden;
+}
+
+.memory-piece.merge::before{
+  display:none;
+}
+
+.memory-piece.merge video{
+  opacity:0;
+}
+
+.memory-piece.merge .memory-puzzle-tile{
+  opacity:1;
+}
+
+#memoryWhiteFlash{
+  position:absolute;
+  inset:0;
+  background:white;
+  opacity:0;
+  z-index:30;
+  pointer-events:none;
+  transition:opacity .8s ease;
+}
+
+#memoryWhiteFlash.show{
+  opacity:1;
+}
+#memoryFinalArt{
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:100vw;
+  height:100vh;
+  max-width:none;
+  object-fit:contain;
+  background:#000;
+  transform:translate(-50%,-50%) scale(.96);
+  opacity:0;
+  z-index:20;
+  border-radius:0;
+  box-shadow:none;
+  transition:opacity 1.4s ease, transform 1.4s ease;
+}
+
+#memoryFinalArt.show{
+  opacity:1;
+  transform:translate(-50%,-50%) scale(1);
+}
+
+@keyframes memoryFloat{
+  0%,100%{translate:0 0;}
+  50%{translate:0 -18px;}
+}
+  
+#mailboxList{
+  max-height:300px !important;
+  overflow-y:auto !important;
+}
+
+#hiddenMailboxSection{
+  margin-top:18px !important;
+  max-height:230px !important;
+  overflow:hidden !important;
+}
+
+#hiddenMailboxList{
+  max-height:180px !important;
+  overflow-y:auto !important;
+  padding-right:8px !important;
+}
+
+.final-hit{
+animation:finalHit .4s ease;
+}
+
+@keyframes finalHit{
+0%{
+transform:translateY(0) scale(1);
+}
+
+40%{
+transform:translateY(-10px) scale(1.06);
+}
+
+100%{
+transform:translateY(0) scale(1);
+}
+}
+  
+.hidden-mailbox-item{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.hidden-message-actions{
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+}
+
+.hidden-approve,
+.hidden-delete{
+  width:38px;
+  height:38px;
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+  font-size:18px;
+  font-weight:900;
+}
+
+.hidden-approve{
+  background:#7dffb3;
+  color:#111;
+}
+
+.hidden-delete{
+  background:#ff8f8f;
+  color:#111;
+}
+
+.memory-desk-page{
+  position:relative;
+  overflow:hidden;
+
+  background:
+    linear-gradient(
+      rgba(0,0,0,.14),
+      rgba(0,0,0,.18)
+    ),
+    url("poyo_page3_bg.png")
+    center/cover no-repeat;
+}
+
+/* 3페이지 앨범 */
+.memory-desk-page > .desk-album-img{
+  position:absolute !important;
+
+  /* 👇 더 안쪽으로 */
+  left:320px !important;
+
+  /* 👇 살짝 아래 */
+  top:250px !important;
+
+  width:470px !important;
+
+  transform:rotate(-5deg) !important;
+  z-index:30 !important;
+}
+
+/* 3페이지 음반 */
+.memory-desk-page > .desk-cd-img{
+  position:absolute !important;
+
+  left:50% !important;
+
+  /* 👇 더 아래로 */
+  top:125px !important;
+
+  width:520px !important;
+
+  /* 👇 위쪽만 걸친 느낌 유지 */
+  transform:translateX(-50%) rotate(2deg) !important;
+
+  z-index:31 !important;
+}
+  
+.love-letter-img{
+  position:absolute;
+
+  right:15%;
+  top:31%;
+
+  width:270px;
+
+  transform:rotate(8deg);
+
+  z-index:3;
+}
+
+/* 폴라로이드 영역 */
+.polaroid-area{
+  position:absolute;
+  left:50%;
+  top:67%;
+
+  width:1180px;
+  height:300px;
+
+  transform:translate(-50%,-50%);
+  z-index:5;
+}
+
+/* 폴라로이드 */
+.polaroid{
+  position:absolute;
+
+  width:230px;
+  height:295px;
+
+  padding:12px 12px 38px;
+
+  background:#fffaf2;
+  border-radius:7px;
+
+  box-shadow:0 18px 34px rgba(0,0,0,.32);
+
+  box-sizing:border-box;
+  cursor:pointer;
+
+  transition:
+    transform .35s ease,
+    box-shadow .35s ease;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+  
+.polaroid:hover{
+  transform:translateY(-16px) scale(1.05) rotate(var(--r));
+  box-shadow:0 26px 48px rgba(0,0,0,.4);
+}
+
+.polaroid-photo{
+  width:100%;
+  height:210px;
+
+  object-fit:cover;
+  display:block;
+
+  border-radius:5px;
+  background:#000;
+
+  box-shadow:inset 0 0 16px rgba(0,0,0,.14);
+}
+
+#videoPopup{
+  position:fixed;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  background:rgba(0,0,0,.68);
+  backdrop-filter:blur(8px);
+  z-index:99999999;
+}
+
+#videoPopup.show{
+  display:flex;
+}
+
+.video-popup-box{
+  position:relative;
+  width:min(78vw,1100px);
+  aspect-ratio:16/9;
+  border-radius:24px;
+  overflow:hidden;
+  background:#000;
+}
+
+#popupVideo{
+  width:100%;
+  height:100%;
+  display:block;
+  object-fit:contain;
+  background:#000;
+}
+
+#popupPlayBtn{
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  width:92px;
+  height:92px;
+  border:none;
+  border-radius:50%;
+  background:rgba(255,255,255,.85);
+  font-size:3rem;
+  cursor:pointer;
+}
+
+#popupPlayBtn.hide{
+  display:none;
+}
+  
+.polaroid-caption{
+  margin-top:14px;
+
+  font-family:'Fredoka', sans-serif;
+  font-weight:800;
+  font-size:.95rem;
+
+  color:#6b5d52;
+}
+
+/* 5장 배치 */
+/* 5장 배치 - 큰 폴라로이드용 부채꼴 */
+.p1{ left:45px;  top:75px; --r:-15deg; transform:rotate(-15deg); }
+.p2{ left:265px; top:40px; --r:-8deg;  transform:rotate(-8deg); }
+.p3{ left:495px; top:25px; --r:0deg;   transform:rotate(0deg); }
+.p4{ left:725px; top:40px; --r:8deg;   transform:rotate(8deg); }
+.p5{ left:945px; top:75px; --r:15deg;  transform:rotate(15deg); }
+  
+</style>
+</head>
+
+<body>
+
+<div id="uiLayer">
+<div class="top-ui">
+<div class="top-btn" data-page="home"><img src="poyo.png">포요</div>
+<div class="top-btn" data-overlay="memory">⭐ 추억</div>
+<div class="top-btn" data-overlay="game">🎮 게임</div>
+</div>
+
+<div class="volume">
+<button id="volumeToggle" type="button">🔊</button>
+</div>
+
+<div class="dots" id="dots"></div>
+</div>
+
+<div id="intro">
+<video id="introVideo" autoplay muted playsinline>
+<source src="video2.mp4">
+</video>
+
+<div id="introText">
+<div id="title">POYO 9TH ANNIVERSARY</div>
+<button id="enterBtn">입장하기</button>
+</div>
+
+<button id="skipBtn">스킵</button>
+</div>
+
+<audio id="mainBgm" loop src="bgm.mp3"></audio>
+<audio id="stepBgm" loop src="step.bgm.mp3"></audio>
+<audio id="memoryBgm" src="poyo - I stan U.mp3"></audio>
+<audio id="filmSfx" src="clip/film.sfx.mp3"></audio>
+
+<audio id="finalTick" src="tick.mp3"></audio>
+  
+<div id="main">
+<div id="pages">
+
+<div class="page active gradient main-login-page">
+<div class="main-title">
+  POYO 9TH
+  <span class="anniversary-spacing">ANNIVERSARY</span>
+</div>
+<div class="sub-title">포동이들과 함께 쌓아온 9년의 시간</div>
+</div>
+
+<div class="page tv-static">
+<div class="binary-bg">0101010101010101010101010101010101010101010101010101010101010101</div>
+
+<h1>
+<img src="img.png" class="logo">
+SIGNAL DETECTED
+</h1>
+
+<div class="signal-text">
+9년이라는 시간은<br>
+<strong>우리가 함께 만들어온 시간입니다</strong>
+</div>
+
+<div class="signal-box">
+<div class="step active" data-step="1">
+STEP 1
+<div class="content">LOCKED</div>
+</div>
+
+<div class="step locked" data-step="2">
+STEP 2
+<div class="content">LOCKED</div>
+</div>
+
+<div class="step locked" data-step="3">
+STEP 3
+<div class="content">LOCKED</div>
+</div>
+</div>
+</div>
+
+<div class="page page-3 memory-desk-page">
+
+ <img class="desk-album-img" src="poyo_album.png" alt="포요 앨범">
+  <img class="desk-cd-img" src="poyo_record.png" alt="포요 음반">
+  <img class="love-letter-img" src="poyo_letter.png" alt="포요 편지">
+  
+  <div class="polaroid-area">
+
+  <div class="polaroid p1" data-video="poyo/poyo_cute.mp4">
+    <video class="polaroid-photo" muted loop playsinline>
+      <source src="poyo/poyo_cute.mp4" type="video/mp4">
+    </video>
+    <div class="polaroid-caption">2023년 5월 22일</div>
+  </div>
+
+  <div class="polaroid p2" data-video="poyo/poyo_dna.mp4">
+    <video class="polaroid-photo" muted loop playsinline>
+      <source src="poyo/poyo_dna.mp4" type="video/mp4">
+    </video>
+   <div class="polaroid-caption">2023년 12월 17일</div>
+  </div>
+
+  <div class="polaroid p3" data-video="poyo/poyo_lingPT.mp4">
+    <video class="polaroid-photo" muted loop playsinline>
+      <source src="poyo/poyo_lingPT.mp4" type="video/mp4">
+    </video>
+   <div class="polaroid-caption">2023년 12월 15일</div>
+  </div>
+
+  <div class="polaroid p4" data-video="poyo/poyo_puzzle.mp4">
+    <video class="polaroid-photo" muted loop playsinline>
+      <source src="poyo/poyo_puzzle.mp4" type="video/mp4">
+    </video>
+   <div class="polaroid-caption">2023년 12월 14일</div>
+  </div>
+
+  <div class="polaroid p5" data-video="poyo/poyo_sanabi.mp4">
+    <video class="polaroid-photo" muted loop playsinline>
+      <source src="poyo/poyo_sanabi.mp4" type="video/mp4">
+    </video>
+   <div class="polaroid-caption">2024년 1월 16일</div>
+  </div>
+
+</div>
+
+</div>
+
+<div id="videoPopup">
+  <div class="video-popup-box">
+    <video id="popupVideo" playsinline></video>
+    <button id="popupPlayBtn" type="button">▶</button>
+  </div>
+</div>
+
+<div class="page page-4 library-page">
+  <div id="guestbook-module">
+
+    <div id="guestbookStage"></div>
+    <div id="promiseChalkText"></div>
+
+    <div class="guestbook-input-box">
+      <input
+        id="guestMessageInput"
+        type="text"
+        maxlength="80"
+        placeholder="포요님에게 9주년 축하 메시지를 남겨주세요"
+      />
+
+      <button type="button" id="guestMessageBtn">
+        책으로 남기기
+      </button>
+    </div>
+
+<!-- 여기부터 추가 -->
+<button id="mailboxOpenBtn">
+📬
+</button>
+
+<div id="mailboxOverlay">
+
+  <div id="mailboxPopup">
+
+    <div class="mailbox-header">
+      <h2>📬 포동이 우편함</h2>
+
+      <button id="mailboxCloseBtn">
+        닫기
+      </button>
+    </div>
+
+    <div id="mailboxList">
+      <p class="mailbox-empty">
+        아직 도착한 메시지가 없어요
+      </p>
+    </div>
+
+    <div id="hiddenMailboxSection">
+
+      <h3>숨김 메시지</h3>
+
+      <div id="hiddenMailboxList"></div>
+    
+
+</div>
+    
+</div>
+  
+</div>
+
+  </div>
+</div>
+  
+  <!-- 5페이지 -->
+  <div class="page gradient last-page-bg">
+    <div class="page5-text">
+      아직 끝이 아니에요 ✨<br>
+      더 많은 추억과 즐거움이 기다리고 있어요<br>
+      상단에서 계속 이어가 보세요
+    </div>
+  </div>
+
+</div>
+
+<div id="stepOverlay">
+<div id="stepCard">
+<div id="yearCounter">0일</div>
+<div id="stepContent"></div>
+</div>
+</div>
+
+<div id="memory" class="overlay memory-overlay">
+
+  <div class="memory-fragment-stage">
+
+<div id="memoryFilmIntro" class="memory-film-intro">
+  <div class="light-dust"></div>
+  <div class="film-noise"></div>
+  <div class="film-frame">
+    <video id="filmClip" muted playsinline preload="auto"></video>
+  </div>
+</div>
+
+    <div class="memory-bg-text">
+      함께한 3,285일,<br>
+      그 모든 순간이 모여,<br>
+      오늘의 이야기를 완성했습니다.
+    </div>
+
+    <div id="memoryFragments"></div>
+
+    <div id="memoryWhiteFlash"></div>
+    
+    <img id="memoryFinalArt" src="poyo_9th_memory.png" alt="포요 9주년 일러스트">
+
+  </div>
+
+</div>
+  
+<div id="game" class="overlay game-overlay">
+  
+  <div class="game-start-screen">
+
+    <div class="game-bg-left"></div>
+    <div class="game-bg-right"></div>
+
+    <div class="game-dark"></div>
+
+    <div class="game-start-content">
+
+      <div class="game-title">
+        포요 썸네일 조회수 게임
+      </div>
+
+      <div class="game-desc">
+  전체 게임 제한시간은 90초입니다.<br>
+  일반 문제는 6초 안에 조회수가 높을 것 같은 썸네일을 맞혀주세요.<br>
+  중간에 돌발 문제가 나올 수가 있습니다.<br>
+  돌발 문제는 8초 안에 더 먼저/늦게 업로드된 영상을 맞히면 +3점!<br>
+  돌발 문제를 3초 안에 정답을 맞히면 추가 +1점!
+</div>
+
+      <input
+        type="text"
+        id="gameNickname"
+        maxlength="12"
+        placeholder="닉네임 입력"
+      >
+
+      <button id="gameStartBtn">
+        게임 시작
+      </button>
+
+      </div>
+
+  </div> <!-- game-start-screen 끝 -->
+
+<!-- 👇 여기 추가 -->
+<div class="game-play-screen" id="gamePlayScreen">
+
+  <div class="game-hud">
+    <div id="gameTotalTime">⏰ 90초</div>
+    <div id="gameQuestionTime">⏱ 8초</div>
+  </div>
+
+  <div id="gameQuestionText">
+    조회수가 더 높은 썸네일은?
+  </div>
+
+  <div class="game-vs-area">
+
+  <button class="game-choice" id="leftChoice">
+ <img id="leftThumb" src="images/thumbnails/thumbnail1.jpg">
+  <div class="thumb-hint" id="leftHint"></div>
+</button>
+
+<div class="game-vs">
+  <span class="game-v">V</span>
+  <span class="game-s">S</span>
+</div>
+
+    <button class="game-choice" id="rightChoice">
+ <img id="rightThumb" src="images/thumbnails/thumbnail2.jpg">
+  <div class="thumb-hint" id="rightHint"></div>
+</button>
+
+  </div>
+
+  <div class="game-score-box">
+  <span id="gameScore">⭐ 0점</span>
+  <span id="gameCombo">🔥 0 COMBO</span>
+</div>
+
+<div id="gameCountdownOverlay">
+  3
+</div>
+
+<div id="suddenNotice">
+  ⚡ 돌발 문제!
+</div>
+
+<div id="answerEffect"></div>
+  
+<div id="gameResultScreen">
+  <div class="game-result-card">
+    <h2>GAME OVER</h2>
+    <p id="gameFinalScore">최종 점수: 0점</p>
+
+    <div class="game-result-buttons">
+      <button id="rankBtn">랭킹 보기</button>
+      <button id="retryGameBtn">다시하기</button>
+    </div>
+  </div>
+</div>
+
+</div>
+
+</div> <!-- game overlay 끝 -->
+  
+<script>
+const introVideo=document.getElementById("introVideo");
+const title=document.getElementById("title");
+const btn=document.getElementById("enterBtn");
+const skipBtn=document.getElementById("skipBtn");
+const mainBgm=document.getElementById("mainBgm");
+const stepBgm=document.getElementById("stepBgm");
+const memoryBgm=document.getElementById("memoryBgm");
+const filmSfx=document.getElementById("filmSfx");
+const volumeToggle=document.getElementById("volumeToggle");
+const pages=document.querySelectorAll(".page");
+const dots=document.getElementById("dots");
+const uiLayer=document.getElementById("uiLayer");
+const stepOverlayMain=document.getElementById("stepOverlay");
+
+let index=0;
+let shown=false;
+let audioMuted=false;
+let isWheelLocked=false;
+
+mainBgm.muted=false;
+mainBgm.volume=0.45;
+
+window.addEventListener("click",()=>{
+  introVideo.muted=false;
+  introVideo.volume=0.8;
+  introVideo.play().catch(()=>{});
+},{once:true});
+
+function introLoop(){
+  if(introVideo.currentTime>=103 && !shown){
+    shown=true;
+    title.style.opacity=1;
+    title.style.visibility="visible";
+    btn.style.opacity=1;
+    btn.style.visibility="visible";
+  }
+  requestAnimationFrame(introLoop);
+}
+introLoop();
+
+function enter(){
+  introVideo.pause();
+  introVideo.currentTime=0;
+  introVideo.muted=true;
+
+  document.getElementById("intro").style.display="none";
+  document.getElementById("main").style.display="block";
+  uiLayer.style.display="block";
+
+  move(0);
+
+  mainBgm.muted=false;
+  mainBgm.volume=0.45;
+  mainBgm.play().catch(()=>{});
+}
+
+if(skipBtn){
+  skipBtn.addEventListener("click", enter);
+}
+
+if(btn){
+  btn.addEventListener("click", enter);
+}
+
+if(volumeToggle){
+  volumeToggle.addEventListener("click",()=>{
+    audioMuted=!audioMuted;
+
+mainBgm.muted = audioMuted;
+stepBgm.muted = audioMuted;
+memoryBgm.muted = audioMuted;
+
+if(filmSfx){
+  filmSfx.muted = audioMuted;
+}
+
+const currentFilmClip = document.getElementById("filmClip");
+
+if(currentFilmClip){
+  currentFilmClip.muted = audioMuted;
+}
+    
+    volumeToggle.textContent=audioMuted ? "🔇" : "🔊";
+  });
+}
+
+for(let i=0;i<5;i++){
+  let d=document.createElement("div");
+  d.className="dot";
+  d.onclick=()=>move(i);
+  dots.appendChild(d);
+}
+
+function move(i){
+  index=i;
+
+  if(window.stepAudioShouldReturnToMain && window.stepAudioTransitionToMain){
+    window.stepAudioShouldReturnToMain=false;
+    window.stepAudioTransitionToMain();
+  }
+
+  pages.forEach((p,idx)=>{
+    p.style.position="absolute";
+    p.style.top="0";
+    p.style.left="0";
+    p.style.width="100%";
+    p.style.transform=`translateY(${(idx-index)*100}vh)`;
+    p.classList.toggle("active",idx===index);
+  });
+
+  document.querySelectorAll(".dot").forEach((d,i)=>{
+    d.classList.toggle("active",i===index);
+  });
+}
+
+window.addEventListener("wheel",(e)=>{
+
+  const mailboxOverlay=document.getElementById("mailboxOverlay");
+  const mailboxList=document.getElementById("mailboxList");
+  const hiddenMailboxList=document.getElementById("hiddenMailboxList");
+
+  const isMailboxOpen =
+    mailboxOverlay &&
+    mailboxOverlay.style.display === "flex";
+
+  if(isMailboxOpen){
+    const target=e.target;
+
+    const isInsideMailboxScroll =
+      (mailboxList && mailboxList.contains(target)) ||
+      (hiddenMailboxList && hiddenMailboxList.contains(target));
+
+    if(isInsideMailboxScroll){
+      return;
+    }
+
+    e.preventDefault();
+    return;
+  }
+
+  if(stepOverlayMain && stepOverlayMain.classList.contains("show")){
+    e.preventDefault();
+    return;
+  }
+
+  e.preventDefault();
+
+  if(isWheelLocked) return;
+
+  isWheelLocked=true;
+
+  if(e.deltaY>0 && index<4){
+    move(index+1);
+  }
+
+  if(e.deltaY<0 && index>0){
+    move(index-1);
+  }
+
+  setTimeout(()=>{
+    isWheelLocked=false;
+  },1100);
+
+},{passive:false});
+
+function showOverlay(id){
+
+  document.body.classList.add("hide-dots");
+
+  document
+    .querySelectorAll(".overlay")
+    .forEach(o=>o.classList.remove("show"));
+
+  document
+    .getElementById(id)
+    .classList.add("show");
+
+  if(id === "game"){
+    setupGameStartBackground();
+    resetGameToStart();
+  }
+
+  if(id === "memory"){
+
+    if(mainBgm){
+      mainBgm.pause();
+      mainBgm.currentTime = 0;
+      mainBgm.muted = audioMuted;
+      mainBgm.volume = 0;
+    }
+
+    memoryBgm.pause();
+    memoryBgm.currentTime = 0;
+    memoryBgm.muted = audioMuted;
+    memoryBgm.volume = 0.42;
+
+    memoryBgm.play().catch((e)=>{
+      console.log("memoryBgm error", e);
+    });
+
+    if(filmSfx){
+      filmSfx.pause();
+      filmSfx.currentTime = 0;
+      filmSfx.muted = audioMuted;
+      filmSfx.volume = 0.35;
+      filmSfx.load();
+
+      filmSfx.play().catch((e)=>{
+        console.log("filmSfx error", e);
+      });
+    }
+
+    setTimeout(()=>{
+      memoryBgm.muted = audioMuted;
+      memoryBgm.volume = 0.42;
+
+      playMemoryFilmIntro();
+
+      setTimeout(()=>{
+        if(filmSfx){
+          const startVol = filmSfx.volume;
+          const fadeTime = 700;
+          const startTime = performance.now();
+
+          function fadeOutFilmSfx(now){
+            const progress = Math.min((now - startTime) / fadeTime, 1);
+            filmSfx.volume = startVol * (1 - progress);
+
+            if(progress < 1){
+              requestAnimationFrame(fadeOutFilmSfx);
+            }else{
+              filmSfx.pause();
+              filmSfx.currentTime = 0;
+              filmSfx.volume = startVol;
+            }
+          }
+
+          requestAnimationFrame(fadeOutFilmSfx);
+        }
+      },1200);
+
+    },1200);
+  }
+}
+
+const memoryFilmList = [
+  "clip/clip_4.mp4",
+  "clip/clip_1.mp4",
+  "clip/clip_2.mp4",
+  "clip/clip_3.mp4",
+  "clip/clip_9.mp4",
+  "clip/clip_5.mp4",
+  "clip/clip_6.mp4",
+  "clip/clip_7.mp4",
+  "clip/clip_8.mp4"
+];
+  
+const memoryFilmDurations = [
+  15000, // clip_4
+  14000, // clip_1
+  14000, // clip_2
+  15000, // clip_3
+  15000, // clip_9
+  14000, // clip_5
+  null,  // clip_6 전체 재생
+  14000, // clip_7
+  14000  // clip_8
+];
+  
+const memoryClipList = [
+  "clip/clip_4.mp4",
+  "clip/clip_1.mp4",
+  "clip/clip_2.mp4",
+  "clip/clip_3.mp4",
+  "clip/clip_5.mp4",
+  "clip/clip_9.mp4",
+  "clip/clip_6.mp4",
+  "clip/clip_7.mp4",
+  "clip/clip_8.mp4"
+];
+
+const memoryPositions = [
+  { left:"7%", top:"12%" },
+  { left:"34%", top:"8%" },
+  { left:"63%", top:"12%" },
+
+  { left:"8%", top:"39%" },
+  { left:"68%", top:"39%" },
+
+  { left:"9%", top:"66%" },
+  { left:"35%", top:"65%" },
+  { left:"64%", top:"65%" },
+
+  { left:"42%", top:"23%" }
+];
+function shuffleArray(arr){
+  return arr
+    .map(value => ({ value, sort: Math.random() }))
+    .sort((a,b)=>a.sort-b.sort)
+    .map(item=>item.value);
+}
+
+function playMemoryFilmIntro(){
+  const filmIntro = document.getElementById("memoryFilmIntro");
+  const filmClip = document.getElementById("filmClip");
+
+  if(!filmIntro || !filmClip){
+    startMemoryFragments();
+    return;
+  }
+
+  filmIntro.style.display = "flex";
+  filmIntro.classList.remove("hide");
+
+  filmClip.classList.remove(
+    "film-fade",
+    "film-last",
+    "transition-soft",
+    "transition-strong",
+    "first-fade-in",
+    "film-crossfade"
+  );
+
+  let filmIndex = 0;
+  let clipTimer = null;
+
+  function fadeAudio(audio, targetVolume, duration){
+    if(!audio) return;
+
+    const startVolume = audio.volume;
+    const startTime = performance.now();
+
+    function animate(now){
+      const progress = Math.min((now - startTime) / duration, 1);
+      audio.volume = startVolume + (targetVolume - startVolume) * progress;
+
+      if(progress < 1){
+        requestAnimationFrame(animate);
+      }
+    }
+
+    requestAnimationFrame(animate);
+  }
+
+  function playNextFilmClip(){
+    if(clipTimer){
+      clearTimeout(clipTimer);
+      clipTimer = null;
+    }
+
+    if(filmIndex >= memoryFilmList.length){
+      filmClip.pause();
+      filmIntro.classList.add("hide");
+
+      setTimeout(()=>{
+        filmIntro.style.display = "none";
+      },1400);
+
+      fadeAudio(memoryBgm, 0.42, 1800);
+
+      setTimeout(()=>{
+        startMemoryFragments();
+      },700);
+
+      return;
+    }
+
+    const src = memoryFilmList[filmIndex];
+    const duration = memoryFilmDurations[filmIndex];
+   const isSoundClip = false;
+   const isLastClip = false;
+
+    filmClip.classList.remove(
+      "film-fade",
+      "film-last",
+      "transition-soft",
+      "transition-strong",
+      "first-fade-in",
+      "film-crossfade"
+    );
+
+    void filmClip.offsetWidth;
+
+    filmClip.src = src;
+    filmClip.currentTime = 0;
+    filmClip.muted = audioMuted || !isSoundClip;
+    filmClip.volume = isSoundClip ? 0.55 : 0;
+
+    filmClip.classList.toggle("film-last", isLastClip);
+    filmClip.classList.add("film-crossfade");
+
+
+    if(filmIndex === 0){
+  filmClip.classList.add("first-fade-in");
+}
+
+    let alreadyNext = false;
+
+    function goNext(){
+      if(alreadyNext) return;
+      alreadyNext = true;
+
+      if(clipTimer){
+        clearTimeout(clipTimer);
+        clipTimer = null;
+      }
+
+      filmClip.pause();
+
+      filmIndex++;
+      playNextFilmClip();
+    }
+
+    filmClip.onended = goNext;
+
+    filmClip.play().catch(()=>{
+      goNext();
+    });
+
+    if(duration !== null){
+      clipTimer = setTimeout(()=>{
+        goNext();
+      }, duration);
+    }
+  }
+
+  playNextFilmClip();
+}
+  
+function startMemoryFragments(){
+  const container = document.getElementById("memoryFragments");
+  if(!container) return;
+
+  container.innerHTML = "";
+
+  const finalArt = document.getElementById("memoryFinalArt");
+  const flash = document.getElementById("memoryWhiteFlash");
+
+  if(finalArt){
+    finalArt.classList.remove("show");
+  }
+
+  if(flash){
+    flash.classList.remove("show","hide");
+  }
+
+const blurs = [
+  "1.4px",
+  "0px",
+  "1.8px",
+  "0px",
+  "1px",
+  "2px",
+  "0px",
+  "1.2px",
+  "0px"
+];
+
+const zIndexes = [
+  5,
+  8,
+  4,
+  9,
+  6,
+  3,
+  7,
+  4,
+  8
+];
+  
+  const sizes = [
+  "390px",
+  "380px",
+  "390px",
+  "380px",
+
+  "360px",
+  "350px",
+  "360px",
+
+  "380px",
+  "360px"
+];
+
+const fixedPositions = [
+  { left:"4%",  top:"12%" },
+  { left:"25%", top:"8%"  },
+  { left:"55%", top:"9%"  },
+  { left:"77%", top:"14%" },
+
+  { left:"5%",  top:"42%" },
+  { left:"78%", top:"48%" },
+
+  { left:"11%", top:"67%" },
+  { left:"38%", top:"70%" },
+  { left:"66%", top:"70%" }
+];
+  
+  const puzzlePositions = [
+    "0% 0%",
+    "50% 0%",
+    "100% 0%",
+    "0% 50%",
+    "50% 50%",
+    "100% 50%",
+    "0% 100%",
+    "50% 100%",
+    "100% 100%"
+  ];
+
+let loadedCount = 0;
+const loadedPieces = [];
+
+memoryClipList.forEach((src, i)=>{
+  const piece = document.createElement("div");
+  piece.className = "memory-piece";
+
+  const pos = fixedPositions[i];
+
+  piece.style.left = pos.left;
+  piece.style.top = pos.top;
+  piece.style.width = sizes[i];
+
+  piece.style.animationDelay = `${i * 0.45}s`;
+
+  piece.style.setProperty("--piece-blur", blurs[i]);
+  piece.style.setProperty("--piece-z", zIndexes[i]);
+  piece.style.setProperty("--rotate", `${Math.random() * 22 - 11}deg`);
+  piece.style.setProperty("--puzzle-pos", puzzlePositions[i]);
+
+  const tapeColors = [
+    "#d8c0a3",
+    "#e8d08c",
+    "#e6a8c8",
+    "#b8dff0",
+    "#c8a6e8"
+  ];
+
+  piece.style.setProperty("--tape-color", tapeColors[i % tapeColors.length]);
+  piece.style.setProperty("--tape-rotate", `${Math.random() * 10 - 5}deg`);
+
+  if(i === 1 || i === 4 || i === 6){
+    piece.classList.add("pin");
+  }
+
+  if(i === 3){
+    piece.classList.add("clip");
+  }
+
+  piece.innerHTML = `
+    <video
+      src="${src}"
+      muted
+      playsinline
+      preload="auto"
+      loop>
+    </video>
+
+    <div class="memory-puzzle-tile"></div>
+  `;
+
+  const video = piece.querySelector("video");
+
+ video.addEventListener("loadeddata", ()=>{
+    loadedCount++;
+
+    if(loadedCount === memoryClipList.length){
+  loadedPieces.forEach((item, idx)=>{
+    const v = item.querySelector("video");
+
+    v.currentTime = 0.05;
+    v.play().catch(()=>{});
+
+    setTimeout(()=>{
+      item.classList.add("ready");
+    }, idx * 850);
+  });
+
+  setTimeout(()=>{
+    const memoryText = document.querySelector(".memory-bg-text");
+
+    if(memoryText){
+      memoryText.classList.add("show");
+    }
+
+   const targetMergeTime = 182; // 3분 2초
+const nowMusicTime = memoryBgm.currentTime;
+const waitToMerge = Math.max((targetMergeTime - nowMusicTime) * 1000, 0);
+
+setTimeout(()=>{
+  startMemoryPuzzleMerge();
+}, waitToMerge);
+  }, loadedPieces.length * 850 + 600);
+    }
+  }, {once:true});
+
+  video.load();
+
+  loadedPieces.push(piece);
+  container.appendChild(piece);
+});
+
+}
+    
+function startMemoryPuzzleMerge(){
+  const pieces = document.querySelectorAll(".memory-piece");
+  const finalArt = document.getElementById("memoryFinalArt");
+
+  const tileW = 260;
+  const tileH = 146.25;
+
+  const gridW = tileW * 3;
+  const gridH = tileH * 3;
+
+  pieces.forEach((piece, i)=>{
+    const col = i % 3;
+    const row = Math.floor(i / 3);
+
+ piece.classList.add("merge");
+
+piece.style.left = `calc(50% - ${gridW / 2}px + ${col * tileW}px)`;
+piece.style.top = `calc(50% - ${gridH / 2}px + ${row * tileH}px)`;
+piece.style.width = `${tileW}px`;
+piece.style.filter = "blur(0)";
+piece.style.zIndex = 15;
+
+const mergeRotate = (Math.random() * 8 - 4).toFixed(1);
+
+piece.style.transform =
+  `rotate(${mergeRotate}deg) scale(1)`;
+  });
+
+const flash = document.getElementById("memoryWhiteFlash");
+
+if(flash){
+  flash.classList.add("show");
+}
+
+const targetArtTime = 186; // 3분 6초
+const nowArtMusicTime = memoryBgm.currentTime;
+const waitToArt = Math.max((targetArtTime - nowArtMusicTime) * 1000, 0);
+
+setTimeout(()=>{
+
+  pieces.forEach(piece=>{
+    piece.style.display = "none";
+  });
+
+  if(finalArt){
+    finalArt.classList.add("show");
+  }
+
+}, waitToArt);
+
+setTimeout(()=>{
+  if(flash){
+    flash.classList.remove("show");
+    flash.classList.add("hide");
+  }
+},450);
+}
+  
+function hideOverlays(){
+  if(memoryBgm){
+    memoryBgm.pause();
+    memoryBgm.currentTime = 0;
+  }
+
+  mainBgm.muted = audioMuted;
+  mainBgm.volume = 0.45;
+  mainBgm.play().catch(()=>{});
+  document.body.classList.remove("hide-dots");
+  document.querySelectorAll(".overlay").forEach(o=>o.classList.remove("show"));
+
+  resetGameState();
+  gamePlayScreen.style.display = "none";
+  gameStartScreen.style.display = "flex";
+}
+
+document.querySelectorAll(".top-btn").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const overlay=btn.dataset.overlay;
+    const page=btn.dataset.page;
+
+    if(page==="home"){
+      hideOverlays();
+      move(0);
+    }
+
+    if(overlay){
+      showOverlay(overlay);
+    }
+  });
+});
+
+/* 👇 여기 추가 */
+const gameThumbCount = 34;
+
+function getThumbSrc(id){
+  return `images/thumbnails/thumbnail${id}.jpg`;
+}
+function randomThumbnail(){
+  return Math.floor(Math.random() * gameThumbCount) + 1;
+}
+
+function setupGameStartBackground(){
+
+  let left = randomThumbnail();
+  let right = randomThumbnail();
+
+  while(left === right){
+    right = randomThumbnail();
+  }
+
+  document.querySelector(".game-bg-left")
+  .style.backgroundImage =
+  `url(${getThumbSrc(left)})`;
+
+  document.querySelector(".game-bg-right")
+  .style.backgroundImage =
+  `url(${getThumbSrc(right)})`;
+}
+
+const gameStartBtn = document.getElementById("gameStartBtn");
+const gameNickname = document.getElementById("gameNickname");
+const gameStartScreen = document.querySelector(".game-start-screen");
+const gamePlayScreen = document.getElementById("gamePlayScreen");
+
+const leftThumb = document.getElementById("leftThumb");
+const rightThumb = document.getElementById("rightThumb");
+const leftChoice = document.getElementById("leftChoice");
+const rightChoice = document.getElementById("rightChoice");
+const leftHint = document.getElementById("leftHint");
+const rightHint = document.getElementById("rightHint");
+
+const gameTotalTimeEl = document.getElementById("gameTotalTime");
+const gameQuestionTimeEl = document.getElementById("gameQuestionTime");
+const gameQuestionText = document.getElementById("gameQuestionText");
+const gameScoreEl = document.getElementById("gameScore");
+const gameComboEl = document.getElementById("gameCombo");
+
+const gameCountdownOverlay = document.getElementById("gameCountdownOverlay");
+const suddenNotice = document.getElementById("suddenNotice");
+const gameResultScreen = document.getElementById("gameResultScreen");
+const gameFinalScore = document.getElementById("gameFinalScore");
+const rankBtn = document.getElementById("rankBtn");
+const retryGameBtn = document.getElementById("retryGameBtn");
+const answerEffect = document.getElementById("answerEffect");
+
+let gameScore = 0;
+let gameCombo = 0;
+let gameTotalTime = 90;
+let gameQuestionTime = 6;
+
+let currentLeft = null;
+let currentRight = null;
+let currentQuestionType = "views";
+let questionStartTime = 0;
+
+let gameTimer = null;
+let questionTimer = null;
+let isGameRunning = false;
+let isQuestionPaused = false;
+let suddenCount = 0;
+let lastQuestionWasSudden = false;
+let usedPairs = new Set();
+let recentIds = [];
+  
+const suddenNumbers = [2,3,4,5,7,8,13,17,23,31];
+
+const thumbnailData = [
+  { id:1, views:32736, date:"2026-01-28" },
+  { id:2, views:82720, date:"2026-03-14" },
+  { id:3, views:23281, date:"2026-04-22" },
+  { id:4, views:121614, date:"2026-04-28" },
+  { id:5, views:188445, date:"2026-02-28" },
+  { id:6, views:9899, date:"2026-01-21" },
+  { id:7, views:13304, date:"2026-01-21" },
+  { id:8, views:99612, date:"2026-01-01" },
+  { id:9, views:45329, date:"2025-12-28" },
+  { id:10, views:75085, date:"2023-05-28" },
+  { id:11, views:3428, date:"2022-09-21" },
+  { id:12, views:4063, date:"2026-01-06" },
+  { id:13, views:54783, date:"2026-04-04" },
+  { id:14, views:52552, date:"2025-11-07" },
+  { id:15, views:3287, date:"2025-11-14" },
+  { id:16, views:11435, date:"2025-10-01" },
+  { id:17, views:76202, date:"2025-08-27" },
+  { id:18, views:154059, date:"2025-08-21" },
+  { id:19, views:27506, date:"2025-10-01" },
+  { id:20, views:4365, date:"2023-06-17" },
+  { id:21, views:12605, date:"2023-01-28" },
+  { id:22, views:12665, date:"2022-09-03" },
+  { id:23, views:20302, date:"2025-09-16" },
+  { id:24, views:54396, date:"2025-09-25" },
+  { id:25, views:80466, date:"2025-10-24" },
+  { id:26, views:88820, date:"2025-12-16" },
+  { id:27, views:74611, date:"2026-02-05" },
+  { id:28, views:8491, date:"2021-08-16" },
+  { id:29, views:34585, date:"2023-02-05" },
+  { id:30, views:77318, date:"2025-09-08" },
+  { id:31, views:76250, date:"2021-10-02" },
+  { id:32, views:34494, date:"2022-01-22" },
+  { id:33, views:99626, date:"2021-10-02" },
+  { id:34, views:16711, date:"2023-04-12" }
+];
+
+function formatViews(num){
+  if(num >= 10000){
+    return (num / 10000).toFixed(1).replace(".0","") + "만회";
+  }
+
+  return num.toLocaleString() + "회";
+}
+
+function resetGameState(){
+  clearInterval(gameTimer);
+  clearInterval(questionTimer);
+
+  gameScore = 0;
+  gameCombo = 0;
+  gameTotalTime = 90;
+  gameQuestionTime = 6;
+
+  currentLeft = null;
+  currentRight = null;
+  currentQuestionType = "views";
+  questionStartTime = 0;
+
+  isGameRunning = false;
+  isQuestionPaused = false;
+  suddenCount = 0;
+  lastQuestionWasSudden = false;
+  usedPairs.clear();
+  recentIds = [];
+
+  gameResultScreen.style.display = "none";
+  suddenNotice.style.display = "none";
+  gameCountdownOverlay.style.display = "none";
+
+  updateGameHud();
+}
+
+function startGame(){
+  const nick = gameNickname.value.trim();
+
+  if(!nick){
+    alert("닉네임을 입력해주세요.");
+    return;
+  }
+
+  resetGameState();
+
+  const firstLeft = randomThumbnail();
+  let firstRight = randomThumbnail();
+
+  while(firstLeft === firstRight){
+    firstRight = randomThumbnail();
+  }
+
+currentLeft = firstLeft;
+currentRight = firstRight;
+
+leftThumb.src = getThumbSrc(firstLeft);
+rightThumb.src = getThumbSrc(firstRight);
+
+ 
+  gameStartScreen.style.display = "none";
+  gamePlayScreen.style.display = "block";
+
+  startCountdown();
+}
+
+function startCountdown(){
+  let count = 3;
+
+  gameCountdownOverlay.style.display = "flex";
+  gameCountdownOverlay.textContent = count;
+
+  const countdownTimer = setInterval(()=>{
+    count--;
+    
+if(count > 0){
+  gameCountdownOverlay.textContent = count;
+
+  if(count === 3){
+    gameCountdownOverlay.style.color = "#52ff8f";
+  }
+
+  if(count === 2){
+    gameCountdownOverlay.style.color = "#ffe44d";
+  }
+
+  if(count === 1){
+    gameCountdownOverlay.style.color = "#ff4f6d";
+  }
+
+  return;
+}
+
+    clearInterval(countdownTimer);
+    gameCountdownOverlay.textContent = "START!";
+    gameCountdownOverlay.style.color = "#52ff8f";
+
+    setTimeout(()=>{
+      gameCountdownOverlay.style.display = "none";
+     setupGameStartBackground();
+
+isGameRunning = true;
+startTotalTimer();
+nextQuestion();
+    },600);
+
+  },1000);
+}
+
+function startTotalTimer(){
+  clearInterval(gameTimer);
+
+  gameTimer = setInterval(()=>{
+    if(!isGameRunning || isQuestionPaused) return;
+
+    gameTotalTime--;
+    updateGameHud();
+
+    if(gameTotalTime <= 0){
+      endGame();
+    }
+  },1000);
+}
+
+function startQuestionTimer(){
+  clearInterval(questionTimer);
+
+  gameQuestionTimeEl.textContent = `⏱ ${gameQuestionTime}초`;
+
+  questionTimer = setInterval(()=>{
+    if(!isGameRunning || isQuestionPaused) return;
+
+    gameQuestionTime--;
+    gameQuestionTimeEl.textContent = `⏱ ${gameQuestionTime}초`;
+
+    if(gameQuestionTime <= 0){
+      wrongAnswer();
+    }
+  },1000);
+}
+
+function updateGameHud(){
+  gameTotalTimeEl.textContent = `⏰ ${gameTotalTime}초`;
+  gameQuestionTimeEl.textContent = `⏱ ${gameQuestionTime}초`;
+  gameScoreEl.textContent = `⭐ ${gameScore}점`;
+  gameComboEl.textContent = `🔥 ${gameCombo} COMBO`;
+
+  const randomColors = [
+  "#ff4f6d",
+  "#52ff8f",
+  "#ffe44d",
+  "#3b82ff",
+  "#c084ff",
+  "#ff9f43"
+];
+
+gameScoreEl.style.color =
+  randomColors[Math.floor(Math.random() * randomColors.length)];
+}
+
+function nextQuestion(){
+  if(!isGameRunning) return;
+
+  clearInterval(questionTimer);
+
+  const forceSudden =
+    suddenCount < 5 &&
+    !lastQuestionWasSudden &&
+    Math.random() < 0.35;
+
+  let pool = [];
+
+  if(forceSudden){
+    pool = thumbnailData.filter(item =>
+      suddenNumbers.includes(item.id)
+    );
+
+    lastQuestionWasSudden = true;
+    suddenCount++;
+  }else{
+    pool = thumbnailData.filter(item =>
+      !suddenNumbers.includes(item.id)
+    );
+
+    lastQuestionWasSudden = false;
+  }
+
+  let validPairFound = false;
+
+  while(!validPairFound){
+    let leftIndex = Math.floor(Math.random() * pool.length);
+    let rightIndex = Math.floor(Math.random() * pool.length);
+
+    while(leftIndex === rightIndex){
+      rightIndex = Math.floor(Math.random() * pool.length);
+    }
+
+    const leftItem = pool[leftIndex];
+    const rightItem = pool[rightIndex];
+
+    const pairKey =
+      [leftItem.id, rightItem.id]
+      .sort((a,b)=>a-b)
+      .join("-");
+
+    if(!usedPairs.has(pairKey)){
+      usedPairs.add(pairKey);
+
+      currentLeft = leftItem;
+      currentRight = rightItem;
+
+      validPairFound = true;
+    }
+  }
+
+  leftThumb.src = getThumbSrc(currentLeft.id);
+  rightThumb.src = getThumbSrc(currentRight.id);
+
+  if(lastQuestionWasSudden){
+    showSuddenNotice();
+  }else{
+    setNormalQuestion();
+    startQuestionTimer();
+  }
+}
+
+function showSuddenNotice(){
+  isQuestionPaused = true;
+  suddenNotice.style.display = "flex";
+  suddenNotice.textContent = "⚡ 돌발 문제!";
+
+  setTimeout(()=>{
+    suddenNotice.style.display = "none";
+    isQuestionPaused = false;
+    setSuddenQuestion();
+    startQuestionTimer();
+  },1000);
+}
+
+function setNormalQuestion(){
+  currentQuestionType = "views";
+  gameQuestionTime = 6;
+
+  gameQuestionText.innerHTML =
+    `조회수가 더 높은 썸네일은?`;
+
+  leftHint.style.display = "none";
+  rightHint.style.display = "none";
+  leftHint.textContent = "";
+  rightHint.textContent = "";
+
+  questionStartTime = Date.now();
+  updateGameHud();
+}
+
+function setSuddenQuestion(){
+  currentQuestionType = Math.random() < 0.5 ? "older" : "newer";
+  gameQuestionTime = 8;
+
+  if(currentQuestionType === "older"){
+    gameQuestionText.innerHTML =
+      `⚡ 더 먼저 업로드된 영상은?`;
+  }else{
+    gameQuestionText.innerHTML =
+      `⚡ 더 늦게 업로드된 영상은?`;
+  }
+
+  leftHint.style.display = "block";
+  rightHint.style.display = "block";
+
+leftHint.textContent =
+  `조회수 : ${formatViews(currentLeft.views)}`;
+
+rightHint.textContent =
+  `조회수 : ${formatViews(currentRight.views)}`;
+
+  questionStartTime = Date.now();
+  updateGameHud();
+}
+
+function playCorrectSound(){
+  try{
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    const ctx = new AudioCtx();
+
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(680, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(1100, ctx.currentTime + 0.12);
+
+    gain.gain.setValueAtTime(0.08, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.18);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.start();
+    osc.stop(ctx.currentTime + 0.18);
+  }catch(e){}
+}
+
+function playWrongSound(){
+  try{
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    const ctx = new AudioCtx();
+
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.type = "square";
+    osc.frequency.setValueAtTime(220, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(90, ctx.currentTime + 0.16);
+
+    gain.gain.setValueAtTime(0.07, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.2);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.start();
+    osc.stop(ctx.currentTime + 0.2);
+  }catch(e){}
+}
+
+function showAnswerEffect(isCorrect){
+  answerEffect.className = isCorrect ? "correct" : "wrong";
+  answerEffect.textContent = isCorrect ? "○" : "×";
+  answerEffect.style.display = "flex";
+
+  if(isCorrect){
+    playCorrectSound();
+  }else{
+    playWrongSound();
+  }
+
+  setTimeout(()=>{
+    answerEffect.style.display = "none";
+    answerEffect.className = "";
+    nextQuestion();
+  },450);
+}
+
+function chooseAnswer(side){
+  if(!isGameRunning || isQuestionPaused || !currentLeft || !currentRight) return;
+
+  clearInterval(questionTimer);
+
+  let correctSide = "left";
+  const leftDate = new Date(currentLeft.date);
+  const rightDate = new Date(currentRight.date);
+
+  if(currentQuestionType === "views"){
+    correctSide =
+      currentLeft.views > currentRight.views ? "left" : "right";
+  }
+
+  if(currentQuestionType === "older"){
+    correctSide =
+      leftDate < rightDate ? "left" : "right";
+  }
+
+  if(currentQuestionType === "newer"){
+    correctSide =
+      leftDate > rightDate ? "left" : "right";
+  }
+
+  if(side === correctSide){
+    if(currentQuestionType === "views"){
+      gameScore += 1;
+    }else{
+      gameScore += 3;
+
+      const elapsed = (Date.now() - questionStartTime) / 1000;
+
+      if(elapsed <= 3){
+        gameScore += 1;
+      }
+    }
+
+    gameCombo++;
+  }else{
+    gameCombo = 0;
+  }
+
+   updateGameHud();
+   showAnswerEffect(side === correctSide);
+}
+
+function wrongAnswer(){
+  clearInterval(questionTimer);
+
+  if(!isGameRunning) return;
+
+  gameCombo = 0;
+  updateGameHud();
+  showAnswerEffect(false);
+}
+
+function endGame(){
+  isGameRunning = false;
+  isQuestionPaused = false;
+
+  clearInterval(gameTimer);
+  clearInterval(questionTimer);
+
+  gameFinalScore.textContent = `최종 점수: ${gameScore}점`;
+
+  gameResultScreen.style.display = "flex";
+}
+
+function retryGame(){
+  resetGameState();
+
+  gamePlayScreen.style.display = "none";
+  gameStartScreen.style.display = "flex";
+
+  setupGameStartBackground();
+}
+
+/* 👇 여기 추가 */
+function resetGameToStart(){
+  resetGameState();
+
+  gamePlayScreen.style.display = "none";
+  gameStartScreen.style.display = "flex";
+
+  gameNickname.value = "";
+}
+
+gameStartBtn.addEventListener("click", startGame);
+leftChoice.addEventListener("click",()=>chooseAnswer("left"));
+rightChoice.addEventListener("click",()=>chooseAnswer("right"));
+
+retryGameBtn.addEventListener("click", retryGame);
+
+rankBtn.addEventListener("click",()=>{
+  alert("랭킹 기능은 Firebase 연결 후 추가할 예정입니다.");
+});
+
+const videoPopup = document.getElementById("videoPopup");
+const popupVideo = document.getElementById("popupVideo");
+const popupPlayBtn = document.getElementById("popupPlayBtn");
+
+let beforePopupMainVolume = 0.45;
+
+document.querySelectorAll(".polaroid").forEach(card=>{
+  card.addEventListener("click",()=>{
+    const videoSrc = card.dataset.video;
+    if(!videoSrc) return;
+
+    beforePopupMainVolume = mainBgm ? mainBgm.volume : 0.45;
+
+    if(mainBgm){
+      mainBgm.volume = 0;
+    }
+
+    popupVideo.pause();
+    popupVideo.src = videoSrc;
+    popupVideo.currentTime = 0;
+    popupVideo.muted = false;
+
+    popupPlayBtn.classList.remove("hide");
+    videoPopup.classList.add("show");
+  });
+});
+
+popupPlayBtn.addEventListener("click",(e)=>{
+  e.stopPropagation();
+
+  popupVideo.play().catch(()=>{});
+  popupPlayBtn.classList.add("hide");
+});
+
+videoPopup.addEventListener("click",(e)=>{
+  if(e.target !== videoPopup) return;
+
+  popupVideo.pause();
+  popupVideo.currentTime = 0;
+  popupVideo.removeAttribute("src");
+  popupVideo.load();
+
+  videoPopup.classList.remove("show");
+  popupPlayBtn.classList.remove("hide");
+
+  if(mainBgm){
+    mainBgm.volume = beforePopupMainVolume;
+    mainBgm.play().catch(()=>{});
+  }
+});
+
+popupVideo.addEventListener("ended",()=>{
+  popupPlayBtn.classList.remove("hide");
+});
+  
+</script>
+
+<script>
+const steps=document.querySelectorAll(".step");
+const stepOverlay=document.getElementById("stepOverlay");
+const stepCard=document.getElementById("stepCard");
+const counter=document.getElementById("yearCounter");
+const stepContent=document.getElementById("stepContent");
+
+let stepBgmStarted=false;
+let step3Finished=false;
+
+let fadeFrames={
+main:null,
+step:null
+};
+
+let stepState={
+unlocked:1,
+running:false,
+rafId:null,
+timerId:null,
+typeTimer:null,
+typeAudio:null,
+promiseTimer:null
+};
+
+const stepData={
+1:{
+type:"count",
+unlockText:"[ 9 Years : Still on-Air ] - (3,287일의 기록)",
+stops:[365,730,1095,1461,1826,2191,2556,2922,3287],
+messages:[
+"1주년 : 어색했던 첫 방송, 우리만의 시작점.",
+"2주년 : 작은 채팅 하나에도 밤새 설레던,<br>서로에게 스며들기 시작한 시간.",
+"3주년 : 특별한 날이 아니어도 방송 알람 하나에,<br>습관처럼 모여드는 우리.",
+"4주년 : 오늘도 어김없이 찾아온, 우리만의 당연한 저녁.",
+"5주년 : 함께한 시간이 벌써 이만큼,<br>여전히 새로운 우리의 대화.",
+"6주년 : 말하지 않아도 다 아는 편안한 사이.",
+"7주년 : 함께라서 가능했던 행운 같은 순간들.",
+"8주년 : 지나온 날보다 앞으로가 더 기대되는 이유.",
+"9주년 : 다시 새롭게 시작될 페이지,<br>우리가 함께 채워갈 내일의 기록"
+]
+},
+2:{
+type:"origin",
+unlockText:"[ The Origin : 첫 번째 로그 ] (3,287일의 기록, 그리고 다시 시작된 새로운 이야기)"
+},
+3:{
+type:"promise",
+unlockText:"[ 3단계: NEXT LOGGING ]<br>\"다시 새롭게 시작될 페이지,<br>우리가 함께 채워갈 내일의 기록\""
+}
+};
+
+function fadeAudio(audio,from,to,duration,key,after){
+if(!audio) return;
+
+if(fadeFrames[key]){
+cancelAnimationFrame(fadeFrames[key]);
+fadeFrames[key]=null;
+}
+
+const start=performance.now();
+audio.volume=from;
+
+function animate(now){
+const progress=Math.min((now-start)/duration,1);
+audio.volume=from+(to-from)*progress;
+
+if(progress<1){
+fadeFrames[key]=requestAnimationFrame(animate);
+}else{
+audio.volume=to;
+fadeFrames[key]=null;
+if(after) after();
+}
+}
+
+fadeFrames[key]=requestAnimationFrame(animate);
+}
+
+function setStepBgmTime(seconds){
+if(!stepBgm) return;
+try{
+stepBgm.currentTime=seconds;
+}catch(e){}
+}
+
+function startStepBgmBuildUp(){
+if(!stepBgm || stepBgmStarted) return;
+
+stepBgmStarted=true;
+
+/* 메인 브금은 끄지 않고 볼륨만 0으로 */
+fadeAudio(mainBgm,mainBgm.volume,0,1500,"main");
+
+setTimeout(()=>{
+
+setStepBgmTime(40);
+stepBgm.volume=0;
+stepBgm.play().catch(()=>{});
+
+fadeAudio(stepBgm,0,0.40,1500,"step");
+
+},1500);
+}
+
+function setStepBgmFocus(){
+if(!stepBgm) return;
+stepBgm.volume=0.40;
+stepBgm.play().catch(()=>{});
+}
+
+function startFinalStepBgm(bg,final,blackout,write){
+if(!stepBgm) return;
+
+/* Enter 순간: 현재 음악 부드럽게 줄이기 */
+fadeAudio(stepBgm,stepBgm.volume,0,1200,"step");
+
+/* 2초 뒤 실행 */
+stepState.promiseTimer=setTimeout(()=>{
+
+if(write) write.classList.add("fade-out");
+
+/* ⭐ 2분(120초)부터 시작 */
+stepBgm.pause();
+
+stepBgm.currentTime = 120;
+stepBgm.volume = 0;
+
+const playPromise = stepBgm.play();
+
+if(playPromise){
+  playPromise.catch(()=>{});
+}
+
+/* 배경 + 문장 등장 */
+if(bg) bg.classList.add("show");
+setTimeout(()=>{
+if(final) final.classList.add("show");
+},1500);
+if(blackout) blackout.classList.remove("show");
+
+/* ⭐ STEP 브금 다시 서서히 올라오기 */
+fadeAudio(stepBgm,0,0.50,2000,"step");
+
+step3Finished=true;
+
+},2000);
+}
+
+function stopStepBgmImmediately(){
+if(fadeFrames.main){
+cancelAnimationFrame(fadeFrames.main);
+fadeFrames.main=null;
+}
+
+if(fadeFrames.step){
+cancelAnimationFrame(fadeFrames.step);
+fadeFrames.step=null;
+}
+
+stepBgm.pause();
+stepBgm.currentTime=0;
+stepBgm.volume=0;
+stepBgmStarted=false;
+step3Finished=false;
+window.stepAudioShouldReturnToMain=false;
+}
+
+window.stepAudioShouldReturnToMain=false;
+
+window.stepAudioTransitionToMain=function(){
+if(!stepBgmStarted) return;
+
+fadeAudio(stepBgm,stepBgm.volume,0,1300,"step",()=>{
+stepBgm.pause();
+stepBgm.currentTime=0;
+stepBgm.volume=0;
+stepBgmStarted=false;
+step3Finished=false;
+});
+
+mainBgm.muted=false;
+mainBgm.volume=0;
+mainBgm.play().catch(()=>{});
+fadeAudio(mainBgm,0,0.30,1300,"main");
+};
+
+function stopStepAnimation(){
+stepState.running=false;
+
+if(stepState.rafId){
+cancelAnimationFrame(stepState.rafId);
+stepState.rafId=null;
+}
+
+if(stepState.timerId){
+clearTimeout(stepState.timerId);
+stepState.timerId=null;
+}
+
+if(stepState.typeTimer){
+clearInterval(stepState.typeTimer);
+stepState.typeTimer=null;
+}
+
+if(stepState.promiseTimer){
+clearTimeout(stepState.promiseTimer);
+stepState.promiseTimer=null;
+}
+}
+
+function resetStepPopup(){
+counter.style.display="block";
+counter.innerText="";
+stepContent.innerHTML="";
+stepContent.className="";
+stepCard.classList.remove("step1-card","step2-card","step3-card");
+}
+
+function playTypeTick(){
+try{
+const AudioCtx=window.AudioContext || window.webkitAudioContext;
+if(!AudioCtx) return;
+
+if(!stepState.typeAudio){
+stepState.typeAudio=new AudioCtx();
+}
+
+const ctx=stepState.typeAudio;
+const osc=ctx.createOscillator();
+const gain=ctx.createGain();
+
+osc.type="square";
+osc.frequency.value=900;
+gain.gain.value=0.025;
+
+osc.connect(gain);
+gain.connect(ctx.destination);
+
+osc.start();
+osc.stop(ctx.currentTime+0.025);
+}catch(e){}
+}
+
+function openStep(stepNum){
+if(stepNum>stepState.unlocked) return;
+
+stopStepAnimation();
+resetStepPopup();
+
+stepOverlay.classList.add("show");
+
+if(stepNum===1){
+startStepBgmBuildUp();
+}
+
+const data=stepData[stepNum];
+
+if(data.type==="count"){
+stepCard.classList.add("step1-card");
+runStepCount(data);
+}
+
+if(data.type==="origin"){
+stepCard.classList.add("step2-card");
+runStep2Origin();
+}
+
+if(data.type==="promise"){
+stepCard.classList.add("step3-card");
+setStepBgmFocus();
+runStep3Promise();
+}
+}
+
+function runStepCount(data){
+
+if(stepState.running) return;
+
+stepState.running = true;
+
+let num = 0;
+let idx = 0;
+
+counter.innerText = "0,000일";
+
+function animateTo(target){
+
+let speed = 20;
+
+function loop(){
+
+/* 8주년 이후부터 점점 느려짐 */
+if(num > data.stops[data.stops.length - 2] - 120){
+speed = 12;
+}
+
+if(num > data.stops[data.stops.length - 2] - 50){
+speed = 7;
+}
+
+if(num > data.stops[data.stops.length - 1] - 15){
+speed = 3;
+}
+
+/* 마지막 숫자 직전 살짝 튕기는 느낌 */
+if(num === data.stops[data.stops.length - 1] - 3){
+counter.style.transform = "translateY(-8px)";
+
+setTimeout(()=>{
+counter.style.transform = "translateY(0)";
+},120);
+}
+
+num += speed;
+
+if(num >= target){
+
+num = target;
+
+counter.innerText =
+num.toLocaleString() + "일";
+
+stepContent.innerHTML = data.messages[idx];
+
+/* 마지막 도착 효과 */
+if(idx === data.stops.length - 1){
+
+counter.classList.add("final-hit");
+
+const finalTick =
+document.getElementById("finalTick");
+
+if(finalTick){
+finalTick.currentTime = 0;
+finalTick.play().catch(()=>{});
+}
+
+setTimeout(()=>{
+counter.classList.remove("final-hit");
+},400);
+
+stepState.running = false;
+return;
+}
+
+idx++;
+
+stepState.timerId = setTimeout(()=>{
+animateTo(data.stops[idx]);
+},2500);
+
+return;
+}
+
+counter.innerText =
+num.toLocaleString() + "일";
+
+stepState.rafId =
+requestAnimationFrame(loop);
+}
+
+loop();
+}
+
+animateTo(data.stops[0]);
+}
+
+function runStep2Origin(){
+counter.style.display="none";
+
+stepContent.className="step2-stage";
+stepContent.innerHTML=
+'<div class="origin-number">10,000</div>'+
+'<div class="origin-message">'+
+'잊고 있었던, 우리들의 첫 번째 페이지.<br>'+
+'서툴게 적었던 만 명이라는 꿈,<br>'+
+'그 작았던 숫자가 지금 우리를 여기까지 데려왔습니다.'+
+'</div>'+
+'<div class="origin-layout">'+
+'<div class="origin-left">'+
+'<div class="origin-left-line"></div>'+
+'</div>'+
+'<div class="origin-right" id="originTyping"></div>'+
+'</div>';
+
+stepState.timerId=setTimeout(()=>{
+const target=document.getElementById("originTyping");
+if(!target) return;
+
+const text='다음 단계에서\n10주년에도 포요와 함께할\n포동이들과의 작은 약속을 적어주세요.';
+let i=0;
+
+stepState.typeTimer=setInterval(()=>{
+if(i<text.length){
+const typed=text
+.slice(0,i+1)
+.replace(/\n/g,"<br>");
+target.innerHTML=typed+'<span class="typing-cursor"></span>';
+playTypeTick();
+i++;
+}else{
+clearInterval(stepState.typeTimer);
+stepState.typeTimer=null;
+target.innerHTML=text.replace(/\n/g,"<br>")+'<span class="typing-cursor"></span>';
+}
+},70);
+},7600);
+}
+
+function runStep3Promise(){
+counter.style.display="none";
+
+stepContent.className="step3-stage";
+stepContent.innerHTML=
+'<div class="step3-bg" id="step3Bg"></div>'+
+'<div class="step3-blackout" id="step3Blackout"></div>'+
+'<div class="step3-write" id="step3Write">'+
+'<div class="step3-title">포요님만 입력할 수 있는 약속입니다</div>'+
+'<div class="step3-line-wrap">'+
+'<input id="promiseCodeInput" type="password" placeholder="비밀코드를 입력해주세요">'+
+'</div>'+
+'<div class="step3-line-wrap" id="promiseWriteBox" style="display:none;">'+
+'<textarea id="promiseInput" maxlength="40" placeholder="포요님의 약속을 입력해주세요"></textarea>'+
+'</div>'+
+'</div>'+
+'<div class="step3-final" id="step3Final">'+
+'<div class="step3-final-text">우리들의 기록은 계속됩니다.<span class="final-cursor"></span></div>'+
+'</div>';
+
+const input=document.getElementById("promiseInput");
+
+/* 👇 여기 추가 */
+const promiseCodeInput =
+document.getElementById("promiseCodeInput");
+
+const promiseWriteBox =
+document.getElementById("promiseWriteBox");
+
+if(promiseCodeInput && promiseWriteBox){
+
+  promiseCodeInput.addEventListener("keydown",(e)=>{
+
+    if(e.key !== "Enter") return;
+
+    if(promiseCodeInput.value.trim() === "POYO_9th"){
+
+      promiseCodeInput.style.display = "none";
+
+      promiseWriteBox.style.display = "block";
+
+    }else{
+
+      alert("비밀코드가 맞지 않아요");
+
+      promiseCodeInput.value = "";
+
+    }
+
+  });
+
+}
+  
+const write=document.getElementById("step3Write");
+const bg=document.getElementById("step3Bg");
+const blackout=document.getElementById("step3Blackout");
+const final=document.getElementById("step3Final");
+
+let submitted=false;
+   
+if(input){
+input.focus();
+
+input.addEventListener("keydown",(e)=>{
+if(e.key==="Enter"){
+e.preventDefault();
+
+if(submitted) return;
+if(input.value.trim().length===0) return;
+
+const promiseText = input.value.trim();
+
+const chalkText = document.getElementById("promiseChalkText");
+if(chalkText){
+  chalkText.style.display = "flex";
+  chalkText.textContent = promiseText;
+}
+
+/* STEP3 약속 Firebase 저장 */
+if(typeof db !== "undefined"){
+  db.collection("promises").add({
+    message: promiseText,
+    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+  });
+}
+  
+submitted=true;
+startFinalStepBgm(bg,final,blackout,write);
+
+}
+});
+}
+}
+
+function unlockCurrentStep(stepNum){
+const currentStep=steps[stepNum-1];
+if(!currentStep) return;
+
+const content=currentStep.querySelector(".content");
+if(content){
+content.innerHTML=stepData[stepNum].unlockText;
+}
+}
+
+function unlockNextStep(currentStepNum){
+if(stepState.unlocked!==currentStepNum) return;
+if(currentStepNum>=3) return;
+
+const nextStepNum=currentStepNum+1;
+const nextStep=steps[nextStepNum-1];
+
+if(!nextStep) return;
+
+stepState.unlocked=nextStepNum;
+nextStep.classList.remove("locked");
+
+const content=nextStep.querySelector(".content");
+
+if(content){
+  content.classList.remove("step-unlocked");
+  content.classList.add("step-unlocking");
+  content.innerHTML="LOCKED";
+
+  setTimeout(()=>{
+    content.classList.remove("step-unlocking");
+    content.innerHTML=stepData[nextStepNum].unlockText;
+    content.classList.add("step-unlocked");
+  },1150);
+}
+}
+
+steps.forEach(step=>{
+step.addEventListener("click",()=>{if(step.classList.contains("locked")){
+  const stepNum=parseInt(step.dataset.step,10);
+
+  if(stepNum !== stepState.unlocked + 1) return;
+
+  stepState.unlocked = stepNum;
+  step.classList.remove("locked");
+
+  const content = step.querySelector(".content");
+
+  if(content){
+    content.classList.remove("step-unlocked");
+    content.classList.add("step-unlocking");
+    content.innerHTML = "LOCKED";
+
+    setTimeout(()=>{
+      content.classList.remove("step-unlocking");
+      content.innerHTML = stepData[stepNum].unlockText;
+      content.classList.add("step-unlocked");
+    },1150);
+  }
+
+  return;
+}
+
+const stepNum=parseInt(step.dataset.step,10);
+
+unlockCurrentStep(stepNum);
+openStep(stepNum);
+
+steps.forEach(s=>s.classList.remove("active"));
+step.classList.add("active");
+
+});
+});
+
+stepOverlay.addEventListener("click",(e)=>{
+if(e.target===stepOverlay){
+stepOverlay.classList.remove("show");
+stopStepAnimation();
+resetStepPopup();
+
+/* STEP3 팝업을 닫으면 STEP 브금 fade-out 후 메인 브금 fade-in */
+if(step3Finished){
+fadeAudio(stepBgm,stepBgm.volume,0,1300,"step",()=>{
+stepBgm.pause();
+stepBgm.currentTime=0;
+stepBgm.volume=0;
+stepBgmStarted=false;
+step3Finished=false;
+
+mainBgm.muted=false;
+mainBgm.volume=0;
+mainBgm.play().catch(()=>{});
+fadeAudio(mainBgm,0,0.30,1300,"main");
+});
+}
+}
+});
+</script>
+
+<script>
+const guestInput =
+document.getElementById("guestMessageInput");
+
+const guestBtn =
+document.getElementById("guestMessageBtn");
+
+const guestStage =
+document.getElementById("guestbookStage");
+
+const mailboxOpenBtn =
+document.getElementById("mailboxOpenBtn");
+
+const mailboxCloseBtn =
+document.getElementById("mailboxCloseBtn");
+
+const mailboxOverlay =
+document.getElementById("mailboxOverlay");
+
+const mailboxListEl =
+document.getElementById("mailboxList");
+
+const hiddenMailboxSection =
+document.getElementById("hiddenMailboxSection");
+
+const hiddenMailboxList =
+document.getElementById("hiddenMailboxList");
+
+const chalkText =
+document.getElementById("promiseChalkText");
+
+if(chalkText){
+  chalkText.style.display = "none";
+}
+
+const postitColors = [
+  "#fff3a6", "#ffd1dc", "#c9f7ff", "#d8ffd2", "#e5d4ff",
+  "#ffe0b5", "#ffb3ba", "#baffc9", "#bae1ff", "#ffffba"
+];
+
+/* 명확하면 차단: 저장 X / 표시 X */
+/* 명확하면 차단: 저장 X / 표시 X */
+const hardBlockRules = {
+  badWords:[
+    "시발","씨발","ㅅㅂ",
+    "병신","ㅂㅅ",
+    "좆","ㅈ같",
+    "꺼져","죽어","뒤져","닥쳐","나가라",
+    "미친놈","미친년",
+    "개새끼","새끼"
+  ],
+
+  sexual:[
+    "섹스","야동","성희롱","자위","자지"
+  ],
+
+  politics:[
+    "대통령","정당","국힘","민주당","좌파","우파","선거","정치","윤""이재명
+  ],
+
+  links:[
+    "http://","https://","www.","discord.gg","open.kakao","오픈채팅"
+  ]
+};
+
+/* 애매하면 우편함 hidden 저장 / 화면 표시 X */
+const softHideRules = {
+  suspicious:[
+    "테스트","test",
+    "광고","홍보","무료가입","카톡","디코","보지","가슴",
+
+    /* 애매한 공격 가능성 */
+    "한심","멍청","짜증","싫어","별로",
+    "꺼졌으면","나갔으면","보기싫",
+    "극혐","노잼","망해라",
+
+    /* 애매한 비하 가능성 */
+    "바보","무식","답답","못생",
+    "이상해","왜저래",
+
+    /* 애매한 갈등 유도 */
+    "논란","싸움","저격","갈라치기",
+    "편가르기","불편","문제있는 내용"
+  ],
+
+  meaningless:[
+    "ㅇㅇ","ㄴㄴ","ㅋㅋ","ㅎㅎ",".","?"
+  ]
+};
+
+let postitList = [];
+let mailboxList = [];
+let colorIndex = 0;
+let lastMessage = "";
+let lastSubmitTime = 0;
+
+const MAX_POSTITS = 10;
+const COOLDOWN = 3000;
+const POSTIT_W = 330;
+const POSTIT_H = 285;
+
+const MIN_MESSAGE_LENGTH = 5;
+const MAX_MESSAGE_LENGTH = 80;
+
+let adminMode = false;
+
+window.toggleGuestAdmin = function(){
+  adminMode = !adminMode;
+  alert(adminMode ? "관리자 모드 ON" : "관리자 모드 OFF");
+};
+
+function showGuestAlert(message){
+  alert(message);
+}
+
+function normalizeText(text){
+  return text
+    .toLowerCase()
+    .replace(/\s+/g,"")
+    .replace(/[~!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/g,"");
+}
+
+function includesAny(text, list){
+  return list.some(word => text.includes(word));
+}
+
+function saveToMailbox(text,status,reason){
+  const mail = {
+    id:Date.now(),
+    text:text,
+    status:status, // approved / hidden
+    reason:reason || "",
+    createdAt:new Date().toISOString()
+  };
+
+  mailboxList.push(mail);
+
+  localStorage.setItem(
+    "poyoMailbox",
+    JSON.stringify(mailboxList)
+  );
+}
+
+/*
+결과값:
+- "approved" = 포스트잇 표시 + 우편함 저장
+- "hidden" = 우편함에 숨김 저장 / 포스트잇 표시 X
+- "blocked" = 저장 X / 표시 X
+*/
+function checkMessage(text){
+  const now = Date.now();
+  const normalized = normalizeText(text);
+
+  if(text.length < MIN_MESSAGE_LENGTH || text.length > MAX_MESSAGE_LENGTH){
+    return {
+      result:"blocked",
+      message:"메시지는 5자 이상 80자 이하로 입력해주세요."
+    };
+  }
+
+  if(now - lastSubmitTime < COOLDOWN){
+    return {
+      result:"blocked",
+      message:"메시지는 3초에 한 번씩 남길 수 있어요."
+    };
+  }
+
+  if(text === lastMessage){
+    return {
+      result:"blocked",
+      message:"같은 메시지는 연속으로 남길 수 없어요."
+    };
+  }
+
+  /* 같은 문자 6자 이상이면 무조건 차단 */
+  if(/(.)\1{5,}/.test(normalized)){
+    return {
+      result:"blocked",
+      message:"같은 문자가 6자 이상 반복된 메시지는 사용할 수 없어요."
+    };
+  }
+
+  if(includesAny(normalized, hardBlockRules.badWords)){
+    return {
+      result:"blocked",
+      message:"욕설 또는 비하 표현이 포함되어 있어요."
+    };
+  }
+
+  if(includesAny(normalized, hardBlockRules.sexual)){
+    return {
+      result:"blocked",
+      message:"성희롱 또는 수위 높은 표현이 포함되어 있어요."
+    };
+  }
+
+  if(includesAny(normalized, hardBlockRules.politics)){
+    return {
+      result:"blocked",
+      message:"정치 또는 갈등 유도 표현은 사용할 수 없어요."
+    };
+  }
+
+  if(includesAny(normalized, hardBlockRules.links)){
+    return {
+      result:"blocked",
+      message:"링크 또는 외부 홍보성 메시지는 사용할 수 없어요."
+    };
+  }
+
+  if(includesAny(normalized, softHideRules.suspicious)){
+    return {
+      result:"hidden",
+      reason:"suspicious"
+    };
+  }
+
+  if(softHideRules.meaningless.includes(normalized)){
+    return {
+      result:"hidden",
+      reason:"meaningless"
+    };
+  }
+
+  return {
+    result:"approved"
+  };
+}
+
+function formatPostitText(text){
+  return text;
+}
+
+function getAvailableColor(){
+  const color = postitColors[colorIndex % postitColors.length];
+  colorIndex++;
+  return color;
+}
+
+function buildSlots(){
+  const stageRect = guestStage.getBoundingClientRect();
+
+  const positions = [
+    // 상단 라인
+    { x:0.04, y:0.07 },
+    { x:0.26, y:0.06 },
+    { x:0.50, y:0.07 },
+    { x:0.72, y:0.06 },
+
+    // 좌측 라인
+    { x:0.04, y:0.28 },
+    { x:0.06, y:0.50 },
+
+    // 우측 라인
+    { x:0.74, y:0.28 },
+    { x:0.76, y:0.50 },
+
+    // 하단 라인 - 입력창보다 위
+    { x:0.07, y:0.62 },
+    { x:0.28, y:0.64 },
+    { x:0.55, y:0.63 },
+    { x:0.74, y:0.62 },
+
+    // 예비 슬롯 - 중앙 문구 영역 피해서 가장자리 위주
+    { x:0.16, y:0.15 },
+    { x:0.62, y:0.16 },
+    { x:0.18, y:0.42 },
+    { x:0.62, y:0.42 }
+  ];
+
+  return positions.map((pos,index)=>({
+    x: Math.round(stageRect.width * pos.x),
+    y: Math.round(stageRect.height * pos.y),
+    w: POSTIT_W,
+    h: POSTIT_H,
+    slotIndex:index
+  }));
+}
+
+function isSlotOverlapping(a,b){
+  const marginX = 8;
+  const marginY = 34;
+
+  const aBox = {
+    x: a.x + 18,
+    y: a.y + 46,
+    w: a.w - 36,
+    h: a.h - 56
+  };
+
+  const bBox = {
+    x: b.x + 18,
+    y: b.y + 46,
+    w: b.w - 36,
+    h: b.h - 56
+  };
+
+  return !(
+    aBox.x + aBox.w + marginX < bBox.x ||
+    aBox.x > bBox.x + bBox.w + marginX ||
+    aBox.y + aBox.h + marginY < bBox.y ||
+    aBox.y > bBox.y + bBox.h + marginY
+  );
+}
+  
+function getNextSlot(excludeSlotIndex = null){
+  const slots = buildSlots();
+
+  const availableSlots = slots.filter(slot => {
+    const sameRemovedSlot = slot.slotIndex === excludeSlotIndex;
+
+    const overlapVisiblePostit = postitList.some(item =>
+      isSlotOverlapping(slot, item.rect)
+    );
+
+    return !sameRemovedSlot && !overlapVisiblePostit;
+  });
+
+if(availableSlots.length === 0){
+  const slots = buildSlots();
+
+  const usedSlotIndexes = postitList.map(
+    item => item.slotIndex
+  );
+
+  const fallbackSlots = slots.filter(
+    slot =>
+      !usedSlotIndexes.includes(slot.slotIndex) &&
+      slot.slotIndex !== excludeSlotIndex
+  );
+
+  if(fallbackSlots.length > 0){
+    return fallbackSlots[
+      Math.floor(Math.random() * fallbackSlots.length)
+    ];
+  }
+
+  return null;
+}
+  return availableSlots[
+    Math.floor(Math.random() * availableSlots.length)
+  ];
+}
+  
+function removePostit(target){
+  target.style.transition =
+    "opacity .35s ease, transform .35s ease";
+
+  target.style.opacity = "0";
+  target.style.transform =
+    "scale(.5) rotate(-8deg)";
+
+  postitList = postitList.filter(item => item.el !== target);
+
+  setTimeout(()=>{
+    target.remove();
+  },350);
+}
+
+function renderMailbox(){
+
+  const approvedList =
+    mailboxList.filter(mail =>
+      mail.status === "approved"
+    );
+
+  const hiddenList =
+    mailboxList.filter(mail =>
+      mail.status === "hidden"
+    );
+
+  /* 일반 메시지 */
+  mailboxListEl.innerHTML = "";
+
+  if(approvedList.length === 0){
+
+    mailboxListEl.innerHTML = `
+      <p class="mailbox-empty">
+        아직 도착한 메시지가 없어요
+      </p>
+    `;
+
+  }else{
+
+    approvedList
+      .slice()
+      .reverse()
+      .forEach(mail => {
+
+        const item = document.createElement("div");
+        item.className = "mailbox-item";
+
+        item.textContent = mail.text;
+
+        mailboxListEl.appendChild(item);
+
+      });
+  }
+
+  /* 관리자 hidden */
+  if(adminMode){
+
+    hiddenMailboxSection.style.display = "block";
+    hiddenMailboxSection.classList.add("show");
+
+    hiddenMailboxList.innerHTML = "";
+
+    hiddenList
+      .slice()
+      .reverse()
+      .forEach(mail => {
+
+        const item = document.createElement("div");
+        item.className = "mailbox-item hidden-mailbox-item";
+
+        const textEl = document.createElement("div");
+        textEl.className = "hidden-message-text";
+        textEl.textContent = `[숨김] ${mail.text}`;
+
+        const actionBox = document.createElement("div");
+        actionBox.className = "hidden-message-actions";
+
+        const approveBtn = document.createElement("button");
+        approveBtn.className = "hidden-approve";
+        approveBtn.type = "button";
+        approveBtn.textContent = "✔";
+
+        approveBtn.addEventListener("click",()=>{
+
+          mail.status = "approved";
+
+          createPostit(mail.text);
+          renderMailbox();
+
+          localStorage.setItem(
+            "poyoMailbox",
+            JSON.stringify(mailboxList)
+          );
+
+        });
+
+        const deleteBtn = document.createElement("button");
+        deleteBtn.className = "hidden-delete";
+        deleteBtn.type = "button";
+        deleteBtn.textContent = "✖";
+
+        deleteBtn.addEventListener("click",()=>{
+
+          const realIndex = mailboxList.indexOf(mail);
+
+          if(realIndex !== -1){
+            mailboxList.splice(realIndex,1);
+          }
+
+          renderMailbox();
+
+          localStorage.setItem(
+            "poyoMailbox",
+            JSON.stringify(mailboxList)
+          );
+
+        });
+
+        actionBox.appendChild(approveBtn);
+        actionBox.appendChild(deleteBtn);
+
+        item.appendChild(textEl);
+        item.appendChild(actionBox);
+
+        hiddenMailboxList.appendChild(item);
+
+      });
+
+  }else{
+
+    hiddenMailboxSection.style.display = "none";
+    hiddenMailboxSection.classList.remove("show");
+
+  }
+}
+
+function createPostit(text){
+  let removedSlotIndex = null;
+ if(postitList.length >= MAX_POSTITS){
+  const oldPostit = postitList.shift();
+  removedSlotIndex = oldPostit.slotIndex;
+
+    oldPostit.el.style.transition =
+      "opacity .35s ease, transform .35s ease";
+
+    oldPostit.el.style.opacity = "0";
+    oldPostit.el.style.transform =
+      "scale(.5) rotate(-8deg)";
+
+    setTimeout(()=>{
+      oldPostit.el.remove();
+    },350);
+  }
+
+ const position = getNextSlot(removedSlotIndex);
+ if(!position){
+  return;
+}
+  
+  const postit = document.createElement("div");
+  postit.className = "guestbook-postit";
+  postit.textContent = formatPostitText(text);
+
+  const color = getAvailableColor();
+  const rotate = (Math.random() * 8 - 4).toFixed(1) + "deg";
+
+  postit.style.background = color;
+  postit.style.left = position.x + "px";
+  postit.style.top = position.y + "px";
+  postit.style.setProperty("--rotate", rotate);
+
+  postit.addEventListener("click",()=>{
+    if(adminMode){
+      removePostit(postit);
+    }
+  });
+
+  guestStage.appendChild(postit);
+
+  setTimeout(()=>{
+    postit.classList.add("show");
+  },30);
+
+  postitList.push({
+    el:postit,
+    rect:position,
+    slotIndex:position.slotIndex
+  });
+}
+
+function createGuestBook(){
+  const text = guestInput.value.trim();
+  if(!text) return;
+
+  const check = checkMessage(text);
+
+  if(check.result === "blocked"){
+    showGuestAlert(check.message);
+    return;
+  }
+
+  if(check.result === "hidden"){
+
+  saveToMailbox(text,"hidden",check.reason);
+
+  renderMailbox();
+
+  const approvedMessages =
+    mailboxList.filter(
+      mail => mail.status === "approved"
+    );
+
+  if(approvedMessages.length > 0){
+
+    const randomMessage =
+      approvedMessages[
+        Math.floor(
+          Math.random() *
+          approvedMessages.length
+        )
+      ];
+
+    createPostit(randomMessage.text);
+  }
+
+  guestInput.value = "";
+
+  return;
+}
+
+  /* approved만 실시간 표시 + 우편함 저장 */
+  saveToMailbox(text,"approved","");
+  createPostit(text);
+  renderMailbox();
+
+  guestInput.value = "";
+  lastMessage = text;
+  lastSubmitTime = Date.now();
+}
+
+guestBtn.addEventListener("click", createGuestBook);
+
+guestInput.addEventListener("keydown", function(e){
+  if(e.key === "Enter"){
+    e.preventDefault();
+    createGuestBook();
+  }
+});
+
+/* 👇 여기 추가 */
+mailboxOpenBtn.addEventListener("click",()=>{
+
+  renderMailbox();
+
+  mailboxOverlay.style.display = "flex";
+
+});
+
+mailboxCloseBtn.addEventListener("click",()=>{
+
+  mailboxOverlay.style.display = "none";
+
+});
+</script>
+
+ <!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyBanqE8W5hy6Ct_4U7ANR90o3jvrMGDOL0",
+  authDomain: "poyo-9th.firebaseapp.com",
+  projectId: "poyo-9th",
+  storageBucket: "poyo-9th.firebasestorage.app",
+  messagingSenderId: "429411517351",
+  appId: "1:429411517351:web:008ed57183209a60a6ec82",
+  measurementId: "G-NYSGM5PMTN"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+const guestMessageInput =
+document.getElementById("guestMessageInput");
+
+const guestMessageBtn =
+document.getElementById("guestMessageBtn");
+
+const guestbookStage =
+document.getElementById("guestbookStage");
+
+const firebaseMailboxList =
+document.getElementById("mailboxList");
+
+guestMessageBtn.addEventListener("click", async ()=>{
+
+  const text = guestMessageInput.value.trim();
+
+  if(!text) return;
+
+  await db.collection("guestbook").add({
+    message:text,
+    hidden:false,
+    createdAt:firebase.firestore.FieldValue.serverTimestamp()
+  });
+
+  guestMessageInput.value = "";
+});
+
+db.collection("guestbook")
+.orderBy("createdAt","desc")
+.onSnapshot(snapshot=>{
+
+  guestbookStage.innerHTML = "";
+  firebaseMailboxList.innerHTML = "";
+
+  snapshot.forEach(doc=>{
+
+    const data = doc.data();
+
+    if(data.hidden) return;
+
+    const postit = document.createElement("div");
+    postit.className = "guestbook-postit show";
+    postit.textContent = data.message;
+
+    postit.dataset.id = doc.id;
+
+  postit.addEventListener("click", async ()=>{
+  const ok = confirm("이 포스트잇을 숨길까요?");
+
+  if(!ok) return;
+
+  await db.collection("guestbook").doc(doc.id).update({
+    hidden:true
+  });
+});
+
+    const x = Math.random()*70+8;
+    const y = Math.random()*55+8;
+    const r = Math.random()*16-8;
+
+    postit.style.left = x + "%";
+    postit.style.top = y + "%";
+    postit.style.setProperty("--rotate", r + "deg");
+
+    guestbookStage.appendChild(postit);
+
+    const item = document.createElement("div");
+    item.className = "mailbox-item";
+    item.textContent = data.message;
+
+    firebaseMailboxList.appendChild(item);
+  });
+
+  if(firebaseMailboxList.innerHTML.trim() === ""){
+    firebaseMailboxList.innerHTML = `
+      <p class="mailbox-empty">
+        아직 도착한 메시지가 없어요
+      </p>
+    `;
+  }
+});
+
+db.collection("promises")
+.orderBy("createdAt","desc")
+.limit(1)
+.onSnapshot(snapshot=>{
+
+  if(snapshot.empty) return;
+
+  const latestPromise = snapshot.docs[0].data();
+  const chalkText = document.getElementById("promiseChalkText");
+
+  if(chalkText && latestPromise.message){
+    chalkText.style.display = "flex";
+    chalkText.textContent = latestPromise.message;
+  }
+});
+</script> 
+  
+</body>
+</html>
