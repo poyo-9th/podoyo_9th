@@ -5236,32 +5236,7 @@ document.getElementById("guestbookStage");
 const firebaseMailboxList =
 document.getElementById("mailboxList");
 
-guestMessageBtn.addEventListener("click", async ()=>{
-
-  const text = guestMessageInput.value.trim();
-
-  if(!text) return;
-
-  await db.collection("guestbook").add({
-    message:text,
-    hidden:false,
-    createdAt:firebase.firestore.FieldValue.serverTimestamp()
-  });
-
-  guestMessageInput.value = "";
-});
-
-guestMessageInput.addEventListener("keydown",(e)=>{
-
-  if(e.key === "Enter"){
-
-    e.preventDefault();
-
-    guestMessageBtn.click();
-
-  }
-
-});
+let livePostits = [];
 
 const safePositions = [
   { left:"5%", top:"13%" },
@@ -5286,28 +5261,20 @@ const postitColors = [
   "#caffbf",
   "#a0e7e5",
   "#bdb2ff",
-  "#ffc6ff"
+  "#ffc6ff",
+  "#ffadad",
+  "#e0bbff"
 ];
-db.collection("guestbook")
-.orderBy("createdAt","desc")
-.onSnapshot(snapshot=>{
+
+function renderLivePostits(){
 
   guestbookStage.innerHTML = "";
-  firebaseMailboxList.innerHTML = "";
 
-  const visibleDocs = snapshot.docs
-    .filter(doc=>{
-      return doc.data().hidden !== true;
-    })
-    .slice(0,10);
-
-  visibleDocs.forEach((doc,index)=>{
-
-    const data = doc.data();
+  livePostits.forEach((text,index)=>{
 
     const postit = document.createElement("div");
     postit.className = "guestbook-postit show";
-    postit.textContent = data.message;
+    postit.textContent = text;
 
     const pos = safePositions[index % safePositions.length];
     const color = postitColors[index % postitColors.length];
@@ -5321,13 +5288,56 @@ db.collection("guestbook")
 
   });
 
+}
+
+guestMessageBtn.addEventListener("click", async ()=>{
+
+  const text = guestMessageInput.value.trim();
+
+  if(!text) return;
+
+  await db.collection("guestbook").add({
+    message:text,
+    hidden:false,
+    createdAt:firebase.firestore.FieldValue.serverTimestamp()
+  });
+
+  livePostits.unshift(text);
+  livePostits = livePostits.slice(0,10);
+
+  renderLivePostits();
+
+  guestMessageInput.value = "";
+
+});
+
+guestMessageInput.addEventListener("keydown",(e)=>{
+
+  if(e.key === "Enter"){
+
+    e.preventDefault();
+
+    guestMessageBtn.click();
+
+  }
+
+});
+
+db.collection("guestbook")
+.orderBy("createdAt","desc")
+.onSnapshot(snapshot=>{
+
+  firebaseMailboxList.innerHTML = "";
+
   snapshot.docs.forEach((doc)=>{
 
     const data = doc.data();
 
     const item = document.createElement("div");
     item.className = "mailbox-item";
-    item.textContent = data.message;
+    item.textContent = data.hidden
+      ? "[숨김] " + data.message
+      : data.message;
 
     firebaseMailboxList.appendChild(item);
 
