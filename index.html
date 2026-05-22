@@ -4390,13 +4390,22 @@ if(promiseCodeInput && promiseWriteBox){
 
     if(e.key !== "Enter") return;
 
-    if(promiseCodeInput.value.trim() === "POYO_9th"){
+  if(promiseCodeInput.value.trim() === "POYO_9th"){
 
-      promiseCodeInput.style.display = "none";
+  const promiseTitle = document.querySelector(".step3-title");
 
-      promiseWriteBox.style.display = "block";
+  if(promiseTitle){
+    promiseTitle.textContent =
+    "10주년에 이루고 싶은 약속은 무엇인가요?";
+  }
 
-    }else{
+  promiseCodeInput.style.display = "none";
+
+  promiseWriteBox.style.display = "block";
+
+}
+    
+    else{
 
       alert("비밀코드가 맞지 않아요");
 
