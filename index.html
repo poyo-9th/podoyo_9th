@@ -3862,6 +3862,8 @@ function endGame(){
 
   gameFinalScore.textContent = `최종 점수: ${gameScore}점`;
 
+  saveGameRanking();
+
   gameResultScreen.style.display = "flex";
 }
 
@@ -3890,9 +3892,43 @@ rightChoice.addEventListener("click",()=>chooseAnswer("right"));
 
 retryGameBtn.addEventListener("click", retryGame);
 
-rankBtn.addEventListener("click",()=>{
-  alert("랭킹 기능은 Firebase 연결 후 추가할 예정입니다.");
-});
+rankBtn.addEventListener("click", showGameRanking);
+
+async function saveGameRanking(){
+
+  const nickname = gameNickname.value.trim() || "포동이";
+
+  await db.collection("gameRankings").add({
+    nickname:nickname,
+    score:gameScore,
+    createdAt:firebase.firestore.FieldValue.serverTimestamp()
+  });
+
+}
+
+async function showGameRanking(){
+
+  const snapshot = await db.collection("gameRankings")
+    .orderBy("score","desc")
+    .limit(10)
+    .get();
+
+  if(snapshot.empty){
+    alert("아직 랭킹이 없어요!");
+    return;
+  }
+
+  let text = "🏆 포요 썸네일 게임 랭킹 TOP 10\n\n";
+
+  snapshot.docs.forEach((doc,index)=>{
+    const data = doc.data();
+
+    text += `${index + 1}위. ${data.nickname} - ${data.score}점\n`;
+  });
+
+  alert(text);
+
+}
 
 const videoPopup = document.getElementById("videoPopup");
 const popupVideo = document.getElementById("popupVideo");
