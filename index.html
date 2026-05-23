@@ -4774,11 +4774,6 @@ if(chalkText){
 }
 
 const postitColors = [
-  "#fff3a6", "#ffd1dc", "#c9f7ff", "#d8ffd2", "#e5d4ff",
-  "#ffe0b5", "#ffb3ba", "#baffc9", "#bae1ff", "#ffffba"
-];
-
-const postitColors = [
   "#fff3a6",
   "#ffb3ba",
   "#ffd6a5",
@@ -4790,35 +4785,6 @@ const postitColors = [
   "#ffadad",
   "#e0bbff"
 ];
-
-let adminMode = false;
-
-window.toggleGuestAdmin = function(){
-
-  adminMode = !adminMode;
-
-  const hiddenMailboxSection =
-    document.getElementById("hiddenMailboxSection");
-
-  const hiddenMailboxList =
-    document.getElementById("hiddenMailboxList");
-
-  if(hiddenMailboxSection){
-
-    hiddenMailboxSection.style.display =
-      adminMode ? "block" : "none";
-
-  }
-
-  if(!adminMode && hiddenMailboxList){
-    hiddenMailboxList.innerHTML = "";
-  }
-
-  alert(adminMode ? "관리자 모드 ON" : "관리자 모드 OFF");
-
-};
-
-function renderLivePostits(){
 
 /* 명확하면 차단: 저장 X / 표시 X */
 /* 명확하면 차단: 저장 X / 표시 X */
@@ -5461,6 +5427,8 @@ guestMessageBtn.addEventListener("click", async ()=>{
 });
 
 guestMessageInput.value = "";
+
+});
 
 guestMessageInput.addEventListener("keydown",(e)=>{
 
