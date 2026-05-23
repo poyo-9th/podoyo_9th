@@ -2102,7 +2102,6 @@ transform:translateY(0) scale(1);
   pointer-events:auto;
   cursor:pointer;
 }
-}
 
 @font-face {
   font-family:'KyoboLetter';
@@ -2514,6 +2513,29 @@ STEP 3
 </div>
 
 <div class="page page-4 library-page">
+
+<script>
+document.addEventListener("DOMContentLoaded",()=>{
+  const loveLetterImg = document.querySelector(".love-letter-img");
+  const letterPopup = document.getElementById("letterPopup");
+  const letterPaper = document.querySelector(".letter-paper");
+
+  if(loveLetterImg && letterPopup && letterPaper){
+    loveLetterImg.addEventListener("click",()=>{
+      letterPopup.classList.add("show");
+    });
+
+    letterPopup.addEventListener("click",()=>{
+      letterPopup.classList.remove("show");
+    });
+
+    letterPaper.addEventListener("click",(e)=>{
+      e.stopPropagation();
+    });
+  }
+});
+</script>
+
   <div id="guestbook-module">
 
     <div id="guestbookStage"></div>
@@ -4772,17 +4794,9 @@ if(chalkText){
   chalkText.style.display = "none";
 }
 
-const postitColors = [
-  "#fff3a6",
-  "#ffb3ba",
-  "#ffd6a5",
-  "#fdffb6",
-  "#caffbf",
-  "#a0e7e5",
-  "#bdb2ff",
-  "#ffc6ff",
-  "#ffadad",
-  "#e0bbff"
+const firebasePostitColors = [
+  "#fff3a6", "#ffd1dc", "#c9f7ff", "#d8ffd2", "#e5d4ff",
+  "#ffe0b5", "#ffb3ba", "#baffc9", "#bae1ff", "#ffffba"
 ];
 
 /* 명확하면 차단: 저장 X / 표시 X */
@@ -5400,7 +5414,7 @@ function renderLivePostits(){
     postit.textContent = text;
 
     const pos = safePositions[index % safePositions.length];
-    const color = postitColors[index % postitColors.length];
+   const color = firebasePostitColors[index % firebasePostitColors.length];
 
     postit.style.left = pos.left;
     postit.style.top = pos.top;
@@ -5525,24 +5539,6 @@ if(mailboxOverlay){
 
   });
 
-}
-
-const loveLetterImg = document.querySelector(".love-letter-img");
-const letterPopup = document.getElementById("letterPopup");
-const letterPaper = document.querySelector(".letter-paper");
-
-if(loveLetterImg && letterPopup && letterPaper){
-  loveLetterImg.addEventListener("click",()=>{
-    letterPopup.classList.add("show");
-  });
-
-  letterPopup.addEventListener("click",()=>{
-    letterPopup.classList.remove("show");
-  });
-
-  letterPaper.addEventListener("click",(e)=>{
-    e.stopPropagation();
-  });
 }
 
 </script> 
