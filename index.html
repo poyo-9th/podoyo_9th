@@ -2443,7 +2443,7 @@ STEP 3
 
  <img class="desk-album-img" src="poyo/poyo_album.png" alt="포요 앨범">
   <img class="desk-cd-img" src="poyo/poyo_record.png" alt="포요 음반">
-  <img class="love-letter-img" src="poyo/poyo_letter.png" alt="포요 편지">
+<img class="love-letter-img" src="poyo/poyo_letter.png" alt="포요 편지" onclick="openLetterPopup()">
   
   <div class="polaroid-area">
 
@@ -2494,8 +2494,8 @@ STEP 3
   </div>
 </div>
 
-<div id="letterPopup">
-  <div class="letter-paper">
+<div id="letterPopup" onclick="this.classList.remove('show')">
+  <div class="letter-paper" onclick="event.stopPropagation()">
     <div class="letter-content">포요님 안녕하세요.
 9주년 진심으로 축하드려요!
 
@@ -2513,29 +2513,6 @@ STEP 3
 </div>
 
 <div class="page page-4 library-page">
-
-<script>
-document.addEventListener("DOMContentLoaded",()=>{
-  const loveLetterImg = document.querySelector(".love-letter-img");
-  const letterPopup = document.getElementById("letterPopup");
-  const letterPaper = document.querySelector(".letter-paper");
-
-  if(loveLetterImg && letterPopup && letterPaper){
-    loveLetterImg.addEventListener("click",()=>{
-      letterPopup.classList.add("show");
-    });
-
-    letterPopup.addEventListener("click",()=>{
-      letterPopup.classList.remove("show");
-    });
-
-    letterPaper.addEventListener("click",(e)=>{
-      e.stopPropagation();
-    });
-  }
-});
-</script>
-
   <div id="guestbook-module">
 
     <div id="guestbookStage"></div>
@@ -5541,6 +5518,14 @@ if(mailboxOverlay){
 
 }
 
-</script> 
+function openLetterPopup(){
+  const popup = document.getElementById("letterPopup");
+
+  if(popup){
+    popup.classList.add("show");
+  }
+}
+
+</script>
 </body>
 </html>
